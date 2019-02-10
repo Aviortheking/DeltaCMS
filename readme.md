@@ -43,6 +43,8 @@ see [changelog.md](./changelog.md)
         - options.list (options for modules & themes to be used site-wide)
         - templates.list (store the template used on the website with a link to there .php file)
     - themes/ (when a new theme is loaded regenerate scripts.js & styles.css, an option will allow the use of direct files)
+        - default/ (a default theme will be here)
+            - theme.php
         - themeName/
             - theme.php (only launched on theme load, to generate cache files & admin options files)
             - public.php (launched everytime on website when page is launched (admins sections are excluded)
@@ -53,6 +55,8 @@ see [changelog.md](./changelog.md)
             - css/
             - js/
     - modules/
+        - default/ (a default module will be here)
+            - module.php
         - moduleName/
             - module.php
             - public.php (same as theme)
