@@ -1,6 +1,1 @@
-{
-	"default": {
-		"URI": "pouet/pouet.php",
-		"static": true
-	}
-}
+{"Page":{"URI":"templates\/page.php","function":"page","static":true}}

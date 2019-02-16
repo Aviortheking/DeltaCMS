@@ -1,20 +1,33 @@
 <?php
 
+/**
+ * this file initialize some variables and do the first part of the routing (between public pages & admin pages)
+ */
 
+require_once "admin/system/functions.php";
+
+ini_set('display_errors', 'On');
 
 $url = strtolower(endsWith($_SERVER["REQUEST_URI"], "/") ? $_SERVER["REQUEST_URI"] . "index" : $_SERVER["REQUEST_URI"]);
+
+define("URL", $url);
+define("ROOT", __DIR__);
+
+
+define("SETTINGS", loadJSON(ROOT . "/admin/settings/admin.json"));
+// $website = new Website();
+// var_dump(__DIR__);
+$_SERVER = null;
 
 if($url == "/test") {
 	require_once "test.php";
 	die;
 }
 
-$_SERVER = null;
 $fileURI = "./pages" . $url . ".json";
 if(in_array(explode("/", $url)[1], ["login", "admin"])) echo ("this is the login/admin page");
 elseif (file_exists($fileURI)) {
-	$json = json_decode(file_get_contents($fileURI));
-	echo ($json->title);
+	require_once "public/public.php";
 } else echo "404";
 /*
 
@@ -29,40 +42,5 @@ verify if user is logged in
 	else start the process to load the page
 
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function endsWith($haystack, $needle) {
-    $length = strlen($needle);
-    if ($length == 0) {
-        return true;
-    }
-
-    return (substr($haystack, -$length) === $needle);
-}
 
 ?>

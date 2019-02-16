@@ -1,8 +1,8 @@
 {
 	"title": "Home",
-	"template": "page",
+	"template": "Page",
 	"access": "public",
-	"content": "<h1>hello world</h1>",
+	"content": "<main>Hello World</main>",
 	"modules": {
 		"?": "?"
 	}
