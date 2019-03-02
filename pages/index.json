@@ -1,9 +1,0 @@
-{
-	"title": "Home",
-	"template": "Page",
-	"access": "public",
-	"content": "<main>Hello World</main>",
-	"modules": {
-		"?": "?"
-	}
-}
