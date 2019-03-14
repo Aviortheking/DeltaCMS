@@ -1,0 +1,9 @@
+{
+	"routes": {
+		"route_name": {
+			"path": "/example",
+			"controller": "\\AdminPanel\\Modules\\ModuleName\\Controller\\ExampleController",
+			"function": "example"
+		}
+	}
+}

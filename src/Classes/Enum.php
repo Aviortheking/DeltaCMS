@@ -1,8 +1,9 @@
 <?php
 
-//
+namespace AdminPanel\Classes\Enum;
 
 abstract class Enum {
+	/** @var null|array $constCacheArray */
 	private static $constCacheArray = NULL;
 
 	private static function getConstants() {

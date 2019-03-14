@@ -1,4 +1,4 @@
 RewriteEngine on
 
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ ./admin/init.php [L,QSA]
+RewriteRule ^(.*)$ ./index.php [L,QSA]
