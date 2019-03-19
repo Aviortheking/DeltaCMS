@@ -11,7 +11,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "AdminPanel\\": "src/"
+            "AdminPanel\\": "src/AdminPanel",
+            "": "src/Modules"
         }
     }
 }

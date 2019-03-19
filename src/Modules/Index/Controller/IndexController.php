@@ -1,6 +1,6 @@
 <?php
 
-namespace AdminPanel\Modules\Index\Controller;
+namespace Index\Controller;
 
 use AdminPanel\Classes\Controller;
 
@@ -11,6 +11,7 @@ class IndexController extends Controller {
 	}
 
 	public function test() {
+		var_dump($this->getUrlArguments());
 		return "test working!";
 	}
 }

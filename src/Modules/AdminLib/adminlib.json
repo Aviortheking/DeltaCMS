@@ -1,0 +1,9 @@
+{
+	"routes": {
+		"adminIndex": {
+			"path": "/admin/",
+			"controller": "\\AdminLib\\Controller\\IndexController",
+			"function": "index"
+		}
+	}
+}

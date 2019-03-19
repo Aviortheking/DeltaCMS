@@ -2,12 +2,12 @@
 	"routes": {
 		"route_name": {
 			"path": "/",
-			"controller": "\\AdminPanel\\Modules\\Index\\Controller\\IndexController",
+			"controller": "\\Index\\Controller\\IndexController",
 			"function": "index"
 		},
 		"route_name2": {
 			"path": "/test/{slug}/",
-			"controller": "\\AdminPanel\\Modules\\Index\\Controller\\IndexController",
+			"controller": "\\Index\\Controller\\IndexController",
 			"function": "test",
 			"args": {
 				"slug": {

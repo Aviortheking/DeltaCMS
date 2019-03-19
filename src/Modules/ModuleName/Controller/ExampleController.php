@@ -1,6 +1,6 @@
 <?php
 
-namespace AdminPanel\Modules\ModuleName\Controller;
+namespace ModuleName\Controller;
 
 use AdminPanel\Classes\Controller;
 

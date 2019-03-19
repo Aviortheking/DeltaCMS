@@ -1,4 +1,5 @@
 <?php
+
 ini_set('display_errors', 'On');
 
 define("ROOT", __DIR__);
@@ -20,11 +21,14 @@ foreach ($modules as $module) {
 		$json = json_decode(file_get_contents($moduleDIR . "/" . strtolower($module) . ".json"));
 		foreach ($json->routes as $routeName => $routeArgs) {
 			$args = isset($routeArgs->args) ? $routeArgs->args : new stdClass();
-
-			if(slugEqualToURI($routeArgs->path, $_SERVER["REQUEST_URI"], $args)) {
+			$composants = slugEqualToURI($routeArgs->path, $_SERVER["REQUEST_URI"], $args);
+			if($composants !== false) {
 				$loader->loadClass($routeArgs->controller);
 				$function = $routeArgs->function;
-				echo (new $routeArgs->controller)->$function();
+				/** @var AdminPanel\Classes\Controller $controller */
+				$controller = new $routeArgs->controller;
+				$controller->setUrlArguments($composants);
+				echo $controller->$function();
 				die;
 			}
 		}
@@ -48,11 +52,12 @@ function startsWith($haystack, $needle)
  * @param string $slug
  * @param object $options options->regex &| options->setting
  *
- * @return bool
+ * @return bool|array
  */
 function slugEqualToURI($slug, $uri, $options) {
 	$uri = explode("/", trim($uri, "\/"));
 	$slug = explode("/", trim($slug, '\/'));
+	$return = array();
 
 	if(count($uri) != count($slug)) return false;
 
@@ -61,7 +66,10 @@ function slugEqualToURI($slug, $uri, $options) {
 		if(preg_match("/{.+}/", $value)) {
 			$elemnt = preg_replace("/{|}/", "", $value);
 			$elOptions = $options->$elemnt;
-			if($elOptions->regex != null && preg_match($elOptions->regex, $uri[$key])) continue;
+			if($elOptions->regex != null && preg_match($elOptions->regex, $uri[$key])) {
+				$return[$elemnt] = $uri[$key];
+				continue;
+			}
 			else return false;
 			//TODO correspond with module settings
 		} else {
@@ -69,5 +77,5 @@ function slugEqualToURI($slug, $uri, $options) {
 			else return false;
 		}
 	}
-	return true;
+	return $return;
 }

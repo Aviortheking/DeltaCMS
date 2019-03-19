@@ -1,9 +1,14 @@
 {
 	"routes": {
 		"route_name": {
-			"path": "/example",
+			"path": "/example/test-{arg}",
 			"controller": "\\AdminPanel\\Modules\\ModuleName\\Controller\\ExampleController",
-			"function": "example"
+			"function": "example",
+			"args": {
+				"arg": {
+					"regex": "/[a-z]+/"
+				}
+			}
 		}
 	}
 }
