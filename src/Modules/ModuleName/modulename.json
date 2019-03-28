@@ -1,8 +1,18 @@
 {
 	"routes": {
-		"route_name": {
-			"path": "/example/test-{arg}",
-			"controller": "\\AdminPanel\\Modules\\ModuleName\\Controller\\ExampleController",
+		"example_route": {
+			"path": "/example",
+			"controller": "\\ModuleName\\Controller\\ExampleController",
+			"function": "index"
+		},
+		"loggedIn": {
+			"path":"/example/is-logged",
+			"controller":"\\ModuleName\\Controller\\ExampleController",
+			"function": "isLoggedIn"
+		},
+		"example_route_with_arg": {
+			"path": "/example/{arg}",
+			"controller": "\\ModuleName\\Controller\\ExampleController",
 			"function": "example",
 			"args": {
 				"arg": {

@@ -1,19 +1,31 @@
 {
 	"routes": {
-		"route_name": {
+		"index": {
 			"path": "/",
 			"controller": "\\Index\\Controller\\IndexController",
 			"function": "index"
 		},
-		"route_name2": {
-			"path": "/test/{slug}/",
-			"controller": "\\Index\\Controller\\IndexController",
-			"function": "test",
+		"css": {
+			"path": "/style.css",
+			"file": "/css/style.css",
+			"type": "text/css",
+			"headers": {
+				"Content-Type": "text/css"
+			}
+		},
+		"arg": {
+			"path": "/{arg}/{arg2}",
+			"controller": "\\ModuleName\\Controller\\ExampleController",
+			"function": "example",
 			"args": {
-				"slug": {
+				"arg": {
 					"regex": "/[a-z]+/"
+				},
+				"arg2": {
+					"option": "test.option"
 				}
 			}
 		}
-	}
+	},
+	"templateFolder": "/Templates/"
 }
