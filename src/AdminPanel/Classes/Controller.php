@@ -2,18 +2,36 @@
 
 namespace AdminPanel\Classes;
 
-class Controller {
+use Twig\Loader\FilesystemLoader;
+use Twig\Environment;
 
-	protected $urlArguments = array();
+class Controller
+{
 
-	public function setUrlArguments($args) {
-		$this->urlArguments = $args;
-	}
+    protected $urlArguments = array();
+    protected $moduleRoot = null;
 
-	protected function getUrlArguments() {
-		return $this->urlArguments;
-	}
+    public function setUrlArguments($args)
+    {
+        $this->urlArguments = $args;
+        return $this;
+    }
+
+    protected function getUrlArguments()
+    {
+        return $this->urlArguments;
+    }
+
+    public function setModuleRoot($root)
+    {
+        $this->moduleRoot = $root;
+        return $this;
+    }
+
+    protected function getModuleRoot()
+    {
+        return $this->moduleRoot;
+    }
 
 //TODO implements functions and variables to add functionnalities to controllers
-
 }

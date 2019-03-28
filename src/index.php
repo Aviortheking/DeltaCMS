@@ -1,81 +1,65 @@
 <?php
 
+use AdminPanel\Classes\AdminPanel;
+use AdminPanel\Classes\Cache;
+
+session_start();
 ini_set('display_errors', 'On');
 
-define("ROOT", __DIR__);
-
-use AdminPanel\Classes\Controller;
-
 /** @var Composer\Autoload\ClassLoader $loader */
-$loader = require_once ROOT . "/../vendor/autoload.php";
+$loader = require_once __DIR__ . "/../vendor/autoload.php";
 // var_dump($_SERVER["REQUEST_URI"] . "/");
 // $_SERVER["REQUEST_URI"] = "/test/";
 //get all dirs
-$modulesDIR = ROOT . "/Modules";
+$modulesDIR = __DIR__ . "/Modules";
 $modules = array_diff(scandir($modulesDIR), array('..', '.'));
+
+dconst("ROOT", __DIR__);
+
+initCache();
+/*
+1: get all the template folders
+2: match routes directly with modules
+*/
+
+
 
 /** @var string $module */
 foreach ($modules as $module) {
-	$moduleDIR = $modulesDIR . "/" . $module;
-	if (is_dir($moduleDIR)) {
-		$json = json_decode(file_get_contents($moduleDIR . "/" . strtolower($module) . ".json"));
-		foreach ($json->routes as $routeName => $routeArgs) {
-			$args = isset($routeArgs->args) ? $routeArgs->args : new stdClass();
-			$composants = slugEqualToURI($routeArgs->path, $_SERVER["REQUEST_URI"], $args);
-			if($composants !== false) {
-				$loader->loadClass($routeArgs->controller);
-				$function = $routeArgs->function;
-				/** @var AdminPanel\Classes\Controller $controller */
-				$controller = new $routeArgs->controller;
-				$controller->setUrlArguments($composants);
-				echo $controller->$function();
-				die;
-			}
-		}
-	}
+    $moduleDIR = $modulesDIR . "/" . $module;
+    if (is_dir($moduleDIR)) {
+        $json = json_decode(file_get_contents($moduleDIR . "/" . strtolower($module) . ".json"));
+        foreach ($json->routes as $routeName => $routeArgs) {
+            $args = isset($routeArgs->args) ? $routeArgs->args : new stdClass();
+            $composants = slugEqualToURI($routeArgs->path, $_SERVER["REQUEST_URI"], $args);
+            // dump($composants !== false);
+            if ($composants !== false) {
+                if (isset($json->templateFolder)) {
+                    AdminPanel::getInstance()->addLoaderFolder($moduleDIR . $json->templateFolder, $module);
+                }
+                if (isset($routeArgs->file)) {
+                    if (isset($routeArgs->type)) {
+                        header("Content-Type: " . $routeArgs->type . "; charset=UTF-8");
+                    }
+                    echo file_get_contents($moduleDIR . $routeArgs->file);
+                    die;
+                }
+                $loader->loadClass($routeArgs->controller);
+                $function = $routeArgs->function;
+                // dump($function);
+                /** @var AdminPanel\Classes\Controller $controller */
+                $controller = new $routeArgs->controller;
+                $controller->setUrlArguments($composants);
+                $controller->setModuleRoot($moduleDIR);
+                // if(isset($json->templateFolder)) $controller->loadTwig($json->templateFolder);
+                echo $controller->$function();
+                die;
+            }
+        }
+    }
 }
 
-
-// echo Controller::example();
-
-// require_once ROOT . "/system/router.php";
-
-// define("ROUTER", Router::getRouter());
-function startsWith($haystack, $needle)
-{
-	$length = strlen($needle);
-	return (substr($haystack, 0, $length) === $needle);
-}
-
-/**
- * @param string $uri
- * @param string $slug
- * @param object $options options->regex &| options->setting
- *
- * @return bool|array
- */
-function slugEqualToURI($slug, $uri, $options) {
-	$uri = explode("/", trim($uri, "\/"));
-	$slug = explode("/", trim($slug, '\/'));
-	$return = array();
-
-	if(count($uri) != count($slug)) return false;
-
-	foreach ($slug as $key => $value) {
-
-		if(preg_match("/{.+}/", $value)) {
-			$elemnt = preg_replace("/{|}/", "", $value);
-			$elOptions = $options->$elemnt;
-			if($elOptions->regex != null && preg_match($elOptions->regex, $uri[$key])) {
-				$return[$elemnt] = $uri[$key];
-				continue;
-			}
-			else return false;
-			//TODO correspond with module settings
-		} else {
-			if($value == $uri[$key]) continue;
-			else return false;
-		}
-	}
-	return $return;
-}
+http_response_code(404);
+// dd();
+echo "404";
+die;
