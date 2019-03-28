@@ -4,3 +4,14 @@ cache/
 /vendor/
 composer.lock
 node_modules
+
+# OS Related (used: https://gitignore.io/)
+
+# Linux
+.directory
+
+# Windows
+[Dd]esktop.ini
+
+# MacOS
+.DS_Store
