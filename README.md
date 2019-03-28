@@ -5,14 +5,15 @@
 - [Admin Panel](#admin-panel)
   - [Table of Content](#table-of-content)
   - [Description](#description)
+  - [Build](#build)
   - [Changelog](#changelog)
   - [Modules](#modules)
     - [Routes](#routes)
       - [Usage](#usage)
     - [Menus](#menus)
-      - [Usage](#usage-1)
+      - [Usage-2](#usage-2)
     - [Options](#options)
-      - [Usage](#usage-2)
+      - [Usage-3](#usage-3)
   - [Files/Folders architecture](#filesfolders-architecture)
   - [Configs files](#configs-files)
     - [site.json](#sitejson)
@@ -21,6 +22,12 @@
 ## Description
 
 WIP
+
+## Build
+
+```console
+composer install --no-dev --optimize-autoload
+```
 
 ## Changelog
 
@@ -53,7 +60,7 @@ $module->addRoute("/regex-to-check-for-the-page/", $function);
 
 On the admin-side you can add menus & items
 
-#### Usage
+#### Usage-2
 
 ```php
 $menu = $module->addMenu("Menu Name");
@@ -65,10 +72,9 @@ $pageFunction = function($settings) {
 $menu->addItem("Item Name", $pageFunction);
 ```
 
-
 ### Options
 
-#### Usage
+#### Usage-3
 
 ```php
 $options = $module->addOptionItem("Item Name");
@@ -86,7 +92,7 @@ $options->addOption("optionVar", OptionTypes::Text, {
 
 ```js
 /*
-possibilité de mettre des routes qui executent des functions
+possibilitÃ© de mettre des routes qui executent des functions
 ajouter des pages dans la section d'admin
 (Module) to initialize & manage the module
 (Menu, Item from Menu) classes to manage adminPanel elements
@@ -139,7 +145,6 @@ options.addOption("option name"=String, enum.text=enumeType, "option to check", 
     - moduleName/
       - module.php
       - public.php (same as theme)
-
 
 ## Configs files
 
