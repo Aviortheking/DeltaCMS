@@ -1,0 +1,36 @@
+# Apache version required 2.x
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+
+	RewriteCond %{REQUEST_FILENAME} !-f [OR]
+	RewriteCond %{REQUEST_FILENAME} -f
+
+	RewriteRule ^(.*)$ src/index.php [L]
+</IfModule>
+
+
+# RedirectMatch 403 ^/vendor/*$
+ErrorDocument 403 /src/index.php
+
+
+<FilesMatch ".*\.(php|html|twig|json)$">
+	<IfVersion < 2.4>
+		Order Allow,Deny
+		Deny from all
+	</IfVersion>
+	<IfVersion >= 2.4>
+		Require all denied
+	</IfVersion>
+</FilesMatch>
+
+# on donne l'autorisation d'acceder au fichier handler.php (sinon le site ne sera pas foncitonnel)
+<FilesMatch "^index.php">
+	<IfVersion < 2.4>
+		Order Allow,Deny
+		Allow from all
+	</IfVersion>
+	<IfVersion >= 2.4>
+		Require all granted
+	</IfVersion>
+</FilesMatch>
