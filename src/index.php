@@ -1,63 +1,95 @@
 <?php
 
 use AdminPanel\Classes\AdminPanel;
-use AdminPanel\Classes\Cache;
+use AdminPanel\Logger\Logger;
+use Symfony\Component\VarDumper\Caster\ExceptionCaster;
+use Psr\Log\InvalidArgumentException;
 
 session_start();
 ini_set('display_errors', 'On');
 
 /** @var Composer\Autoload\ClassLoader $loader */
 $loader = require_once __DIR__ . "/../vendor/autoload.php";
-// var_dump($_SERVER["REQUEST_URI"] . "/");
-// $_SERVER["REQUEST_URI"] = "/test/";
-//get all dirs
-$modulesDIR = __DIR__ . "/Modules";
-$modules = array_diff(scandir($modulesDIR), array('..', '.'));
+$logger = new Logger(dirname(__DIR__) . '/logs/logs.log');
 
-dconst("ROOT", __DIR__);
 
-initCache();
+$ap = AdminPanel::getInstance();
+
 /*
 1: get all the template folders
 2: match routes directly with modules
 */
+$cache = $ap->getCache();
+$caches = $cache->getMultiple(array(
+    'routes',
+    'templates'
+));
 
-
-
-/** @var string $module */
-foreach ($modules as $module) {
-    $moduleDIR = $modulesDIR . "/" . $module;
-    if (is_dir($moduleDIR)) {
-        $json = json_decode(file_get_contents($moduleDIR . "/" . strtolower($module) . ".json"));
-        foreach ($json->routes as $routeName => $routeArgs) {
-            $args = isset($routeArgs->args) ? $routeArgs->args : new stdClass();
-            $composants = slugEqualToURI($routeArgs->path, $_SERVER["REQUEST_URI"], $args);
-            // dump($composants !== false);
-            if ($composants !== false) {
-                if (isset($json->templateFolder)) {
-                    AdminPanel::getInstance()->addLoaderFolder($moduleDIR . $json->templateFolder, $module);
-                }
-                if (isset($routeArgs->file)) {
-                    if (isset($routeArgs->type)) {
-                        header("Content-Type: " . $routeArgs->type . "; charset=UTF-8");
-                    }
-                    echo file_get_contents($moduleDIR . $routeArgs->file);
-                    die;
-                }
-                $loader->loadClass($routeArgs->controller);
-                $function = $routeArgs->function;
-                // dump($function);
-                /** @var AdminPanel\Classes\Controller $controller */
-                $controller = new $routeArgs->controller;
-                $controller->setUrlArguments($composants);
-                $controller->setModuleRoot($moduleDIR);
-                // if(isset($json->templateFolder)) $controller->loadTwig($json->templateFolder);
-                echo $controller->$function();
-                die;
+//if cache don't exist create it!
+if ($caches["routes"] === null || $caches['templates'] === null) {
+    $modulesDIR = __DIR__ . "/Modules";
+    $modules = array_diff(scandir($modulesDIR), array('..', '.'));
+    /** @var string $module */
+    foreach ($modules as $module) {
+        $moduleDIR = $modulesDIR . "/" . $module;
+        if (is_dir($moduleDIR) && is_file($moduleDIR . "/" . strtolower($module) . ".json")) {
+            $json = json_decode(file_get_contents($moduleDIR . "/" . strtolower($module) . ".json"));
+            if (isset($json->templateFolder)) {
+                $cache->set(
+                    'templates',
+                    array_merge($cache->get('templates', array()), array(
+                        $module => $moduleDIR . $json->templateFolder
+                    ))
+                );
+            }
+            foreach ($json->routes as $routeName => $routeArgs) {
+                $cache->set('routes', array_merge(
+                    $cache->get('routes', array()),
+                    array(
+                        $routeName => $routeArgs
+                    )
+                ));
             }
         }
     }
+    $caches = $cache->getMultiple(array(
+        'routes',
+        'templates'
+    ));
 }
+//load each templates
+foreach ($caches['templates'] as $key => $value) {
+    $ap->addLoaderFolder($value, $key);
+}
+foreach ($caches['routes'] as $key => $value) {
+    $args = isset($value->args) ? $value->args : new stdClass();
+    $composants = slugEqualToURI($value->path, $_SERVER["REQUEST_URI"], $args);
+    // dump($composants !== false);
+    if ($composants !== false) {
+        if (isset($value->file)) {
+            if (isset($value->type)) {
+                header("Content-Type: " . $value->type . "; charset=UTF-8");
+            }
+            echo file_get_contents($moduleDIR . $value->file);
+            die;
+        }
+        $loader->loadClass($value->controller);
+        $function = $value->function;
+        // dump($function);
+        /** @var AdminPanel\Classes\Controller $controller */
+        $controller = new $value->controller();
+        // dd(new $routeArgs->controller());
+        if ($composants) {
+            $controller->setUrlArguments($composants);
+        }
+        // if(isset($json->templateFolder)) $controller->loadTwig($json->templateFolder);
+        echo $controller->$function();
+        die;
+    }
+}
+
+
+
 
 http_response_code(404);
 // dd();

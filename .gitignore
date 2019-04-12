@@ -3,7 +3,12 @@ cache/
 
 /vendor/
 composer.lock
-node_modules
+/node_modules/
+/logs/*
+!/logs/.gitkeep
+/src/Modules/*
+!/src/Modules/ModuleName/
+/tmp/
 
 # OS Related (used: https://gitignore.io/)
 

@@ -33,14 +33,19 @@ function slugEqualToURI($slug, $uri, $options)
     foreach ($slug as $key => $value) {
         if (preg_match("/{.+}/", $value)) {
             $elemnt = preg_replace("/{|}/", "", $value);
+            // dd($options);
+            if (!isset($options->$elemnt)) {
+                $return[$elemnt] = explode("?", $uri[$key])[0];
+                continue;
+            }
             $elOptions = $options->$elemnt;
-            if ($elOptions->regex != null && preg_match($elOptions->regex, $uri[$key])) {
-                $return[$elemnt] = $uri[$key];
+            if (!isset($elOptions->regex) || ($elOptions->regex != null && preg_match($elOptions->regex, $uri[$key]))) {
+                $return[$elemnt] = explode("?", $uri[$key])[0];
                 continue;
             } else {
                 return false;
             }
-            //TODO correspond with module settings
+            //TODO: correspond with module settings
         } else {
             if ($value == $uri[$key]) {
                 continue;
@@ -76,24 +81,15 @@ function initCache()
     $json = getModulesJSON();
     foreach ($json as $moduleName => $moduleValues) {
         if (isset($moduleValues["routes"])) {
-            //TODO
+            //TODO:
         }
         if (isset($moduleValues["templateFolder"])) {
-            Cache::getInstance()->addTemplateFolder(ROOT . "/Modules/" . $moduleName . $moduleValues["templateFolder"], $moduleName);
+            Cache::getInstance()->addTemplateFolder(
+                "/Modules/" . $moduleName . $moduleValues["templateFolder"],
+                $moduleName
+            );
         }
         // return $moduleValues;
     }
     return $json;
-}
-
-/**
- * Define constant.
- * (well really it's just an hack for my linter I really don't why we can't define constant in the main process)
- *
- * @param string $name constant name
- * @param mixed $value contant value
- */
-function dconst(string $name, $value)
-{
-    define($name, $value);
 }
