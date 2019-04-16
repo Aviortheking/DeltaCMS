@@ -1,7 +1,5 @@
 <?php
 
-use AdminPanel\Classes\Cache;
-
 function ping()
 {
     return "pong";
@@ -24,7 +22,7 @@ function slugEqualToURI($slug, $uri, $options)
 {
     $uri = explode("/", trim($uri, "\/"));
     $slug = explode("/", trim($slug, '\/'));
-    $return = array();
+    $return = new stdClass();
 
     if (count($uri) != count($slug)) {
         return false;
@@ -35,12 +33,12 @@ function slugEqualToURI($slug, $uri, $options)
             $elemnt = preg_replace("/{|}/", "", $value);
             // dd($options);
             if (!isset($options->$elemnt)) {
-                $return[$elemnt] = explode("?", $uri[$key])[0];
+                $return->$elemnt = explode("?", $uri[$key])[0];
                 continue;
             }
             $elOptions = $options->$elemnt;
             if (!isset($elOptions->regex) || ($elOptions->regex != null && preg_match($elOptions->regex, $uri[$key]))) {
-                $return[$elemnt] = explode("?", $uri[$key])[0];
+                $return->$elemnt = explode("?", $uri[$key])[0];
                 continue;
             } else {
                 return false;
@@ -76,20 +74,16 @@ function getModulesJSON()
     return $t;
 }
 
-function initCache()
+function jsonc_decode($filename, $assoc = false, $depth = 512, $options = 0)
 {
-    $json = getModulesJSON();
-    foreach ($json as $moduleName => $moduleValues) {
-        if (isset($moduleValues["routes"])) {
-            //TODO:
-        }
-        if (isset($moduleValues["templateFolder"])) {
-            Cache::getInstance()->addTemplateFolder(
-                "/Modules/" . $moduleName . $moduleValues["templateFolder"],
-                $moduleName
-            );
-        }
-        // return $moduleValues;
-    }
-    return $json;
+    return json_decode(
+        preg_replace(
+            '![ \t]*//.*[ \t]*[\r\n]!',
+            '',
+            file_get_contents($filename)
+        ),
+        $assoc,
+        $depth,
+        $options
+    );
 }
