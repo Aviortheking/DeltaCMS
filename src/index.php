@@ -23,7 +23,8 @@ $caches = $cache->getMultiple(array(
 ));
 
 //if cache don't exist create it!
-if (!($ap->isCacheEnabled()) || $caches["routes"] === null || $caches['templates'] === null || $caches['forms'] === null) {
+$cachesBool = $caches["routes"] === null || $caches['templates'] === null || $caches['forms'] === null;
+if (!($ap->isCacheEnabled()) || $cachesBool ) {
     $modulesDIR = __DIR__ . "/Modules";
     $modules = array_diff(scandir($modulesDIR), array('..', '.'));
     /** @var string $module */
@@ -73,7 +74,7 @@ foreach ($caches['templates'] as $key => $value) {
 }
 foreach ($caches['routes'] as $key => $value) {
     $args = isset($value->args) ? $value->args : new stdClass();
-    $composants = slugEqualToURI($value->path, $_SERVER["REQUEST_URI"], $args);
+    $composants = slugEqualToURI($value->path, filter_input(INPUT_SERVER, "REQUEST_URI"), $args);
     // dump($composants !== false);
     if ($composants !== false) {
         if (isset($value->file)) {

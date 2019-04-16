@@ -58,7 +58,7 @@ function slugEqualToURI($slug, $uri, $options)
 
 function getModulesJSON()
 {
-    $t = array();
+    $temp = array();
     $modulesDIR = "./Modules";
     $modules = array_diff(scandir($modulesDIR), array('..', '.'));
     foreach ($modules as $module) {
@@ -67,11 +67,11 @@ function getModulesJSON()
         if (is_dir($moduleDIR) && is_file($file)) {
             $json = json_decode(file_get_contents($file), true);
             if ($json) {
-                $t[$module] = $json;
+                $temp[$module] = $json;
             }
         }
     }
-    return $t;
+    return $temp;
 }
 
 function jsonc_decode($filename, $assoc = false, $depth = 512, $options = 0)

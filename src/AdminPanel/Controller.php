@@ -41,12 +41,14 @@ class Controller
 
     protected function getHTTPGet(string $element, $default = null, $emptyAllowed = false)
     {
-        return isset($_GET[$element]) && (!empty($_GET[$element]) || $emptyAllowed) ? $_GET[$element] : $default;
+        $input = filter_input(INPUT_GET, $element);
+        return isset($input) && (!empty($input) || $emptyAllowed) ? $input : $default;
     }
 
     protected function getHTTPPost(string $element, $default = null, $emptyAllowed = false)
     {
-        return isset($_POST[$element]) && (!empty($_POST[$element]) || $emptyAllowed) ? $_POST[$element] : $default;
+        $input = filter_input(INPUT_POST, $element);
+        return isset($input) && (!empty($input) || $emptyAllowed) ? $input : $default;
     }
 
     protected function render($template, $args)

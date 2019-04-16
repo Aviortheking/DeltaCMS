@@ -9,10 +9,10 @@ class Authentificator
     private static $instance = null;
     public static function getInstance()
     {
-        if (!isset(Authentificator::$instance)) {
-            Authentificator::$instance = new self();
+        if (!isset(self::$instance)) {
+            self::$instance = new self();
         }
-        return Authentificator::$instance;
+        return self::$instance;
     }
 
     private $isLoggedIn = false;

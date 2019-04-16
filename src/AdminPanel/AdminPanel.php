@@ -34,16 +34,16 @@ class AdminPanel
      */
     public static function getInstance()
     {
-        if (!isset(AdminPanel::$instance)) {
+        if (!isset(self::$instance)) {
             define("ROOT", dirname(dirname(__DIR__)));
-            $ap = AdminPanel::$instance = new self();
+            $ap = self::$instance = new self();
             $ap->root = dirname(__DIR__);
             $ap->settings = jsonc_decode(dirname($ap->root) . "/config.jsonc", false);
             $ap->loader = new FilesystemLoader();
             $ap->addLoaderFolder($ap->root . "/AdminPanel/Twig");
             // $ap->setLoader(new FilesystemLoader());
         }
-        return AdminPanel::$instance;
+        return self::$instance;
     }
 
     /** @var Logger $logger */
