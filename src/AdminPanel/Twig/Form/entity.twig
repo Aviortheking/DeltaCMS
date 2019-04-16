@@ -1,0 +1,13 @@
+{% extends "@AdminPanel/Form/_default.twig" %}
+{% block form %}
+	{% if label %}
+		<label for="{{name}}">{{label}}</label>
+	{% endif %}
+
+	<input type="text" name="{{name}}" id="{{name}}" list="{{name}}_list"&nbsp;{% for index, item in attr %}{{index}}="{{item}}"&nbsp;{% endfor %}/>
+	<datalist id="{{name}}_list">
+		{% for entity in entities %}
+			<option>{{entity.name}}</option>
+		{% endfor %}
+</datalist>
+{% endblock %}

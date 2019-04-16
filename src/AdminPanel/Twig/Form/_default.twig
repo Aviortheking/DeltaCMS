@@ -1,0 +1,14 @@
+{# Default label if type is not found #}
+{% spaceless %}
+	{% block form %}
+		{% if label %}
+			<label for="{{ name }}">{{label}}</label>
+		{% endif %}
+		<input
+			type="{{ type }}"
+			name="{{ name }}"
+			id="{{ name }}"
+			{% for index, item in attr %}{{index}}="{{item}}" {% endfor %}
+		/>
+{% endblock %}
+{% endspaceless %}
