@@ -1,0 +1,10 @@
+{% extends "@AdminPanel/form/_default.twig" %}
+{% block form %}
+	<input
+		type="date"
+		name="{{name}}"
+		id="{{name}}"
+		{% if value is not null %}value="{{value|date("Y-m-d")}}"{% endif %}
+		{% for index, item in attr %}{{index}}="{{item}}" {% endfor %}
+	/>
+{% endblock %}
