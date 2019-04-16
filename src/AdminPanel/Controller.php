@@ -1,6 +1,6 @@
 <?php
 
-namespace AdminPanel\Classes;
+namespace AdminPanel;
 
 class Controller
 {
@@ -52,6 +52,11 @@ class Controller
     protected function render($template, $args)
     {
         return AdminPanel::getInstance()->getTwig()->render($template, $args);
+    }
+
+    protected function getEM()
+    {
+        return AdminPanel::getInstance()->getEM();
     }
 
 
