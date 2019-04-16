@@ -1,20 +1,16 @@
 <?php
 
-use AdminPanel\Classes\AdminPanel;
-use AdminPanel\Logger\Logger;
-use Symfony\Component\VarDumper\Caster\ExceptionCaster;
-use Psr\Log\InvalidArgumentException;
+use AdminPanel\AdminPanel;
 
 session_start();
 ini_set('display_errors', 'On');
 
 /** @var Composer\Autoload\ClassLoader $loader */
 $loader = require_once __DIR__ . "/../vendor/autoload.php";
-$logger = new Logger(dirname(__DIR__) . '/logs/logs.log');
 
-
+//die;
 $ap = AdminPanel::getInstance();
-
+// dd($ap);
 /*
 1: get all the template folders
 2: match routes directly with modules
@@ -22,11 +18,12 @@ $ap = AdminPanel::getInstance();
 $cache = $ap->getCache();
 $caches = $cache->getMultiple(array(
     'routes',
-    'templates'
+    'templates',
+    'forms'
 ));
 
 //if cache don't exist create it!
-if ($caches["routes"] === null || $caches['templates'] === null) {
+if (!($ap->isCacheEnabled()) || $caches["routes"] === null || $caches['templates'] === null || $caches['forms'] === null) {
     $modulesDIR = __DIR__ . "/Modules";
     $modules = array_diff(scandir($modulesDIR), array('..', '.'));
     /** @var string $module */
@@ -43,12 +40,25 @@ if ($caches["routes"] === null || $caches['templates'] === null) {
                 );
             }
             foreach ($json->routes as $routeName => $routeArgs) {
+                if (isset($routeArgs->file)) {
+                    $routeArgs->file = $moduleDIR . $routeArgs->file;
+                }
                 $cache->set('routes', array_merge(
                     $cache->get('routes', array()),
                     array(
                         $routeName => $routeArgs
                     )
                 ));
+            }
+            if (isset($json->forms)) {
+                foreach ($json->forms as $formName => $formArgs) {
+                    $cache->set('forms', array_merge(
+                        $cache->get('forms', array()),
+                        array(
+                            $formName => $formArgs
+                        )
+                    ));
+                }
             }
         }
     }
@@ -70,7 +80,7 @@ foreach ($caches['routes'] as $key => $value) {
             if (isset($value->type)) {
                 header("Content-Type: " . $value->type . "; charset=UTF-8");
             }
-            echo file_get_contents($moduleDIR . $value->file);
+            echo file_get_contents($value->file);
             die;
         }
         $loader->loadClass($value->controller);
@@ -92,6 +102,4 @@ foreach ($caches['routes'] as $key => $value) {
 
 
 http_response_code(404);
-// dd();
 echo "404";
-die;
