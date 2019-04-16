@@ -35,7 +35,7 @@
 	},
 	"scripts": {
 		"phpmd": "phpmd src/ text phpmd",
-		"phpcs": "phpcs --coverage-text --colors=never",
+		"phpunit": "phpunit --coverage-text --colors=never",
 		"test": "composer run phpmd && composer run phpcs"
 	}
 }

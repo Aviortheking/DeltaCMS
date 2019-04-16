@@ -44,10 +44,10 @@ build:
 phpmd:
   stage: test
   script:
-    - composer run phpmd
+    - php composer.phar run phpmd
 
 phpcs:
   stage: test
   script:
-    - php composer.phar run phpcs
+    - php composer.phar run phpunit
     - vendor/bin/codacycoverage clover tmp/code-coverage.xml
