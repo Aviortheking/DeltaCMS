@@ -59,7 +59,7 @@ class Logger extends AbstractLogger
             file_put_contents($this->file, $this->fillMessage($this->start . $this->exception, $context), FILE_APPEND);
         }
         if ($message === null && !isset($context["exception"])) {
-            throw new InvalidArgumentException("no exception nor message was found");
+            throw new InvalidArgumentException("Message and Exception not set");
         }
     }
 }

@@ -3,6 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use AdminPanel\Cache\FileCache;
 use AdminPanel\Logger;
+use Psr\Log\InvalidArgumentException;
 
 final class LoggerTest extends TestCase
 {
@@ -29,7 +30,6 @@ final class LoggerTest extends TestCase
             unlink($file);
         }
         $logger = new Logger($file);
-        $this->assertFileExists($file);
 
         $exception = new Exception("hello phpunit");
         $logger->alert("test", array(
@@ -39,5 +39,37 @@ final class LoggerTest extends TestCase
             $file,
             "[Alert]: " . (new \DateTime())->format("Y-m-d H:i:s") . " test\n[Alert]: " . (new \DateTime())->format("Y-m-d H:i:s") . " 0 " . $exception->getFile() . "[Exception] 0 " . $exception->getMessage() . "\n"
         );
+    }
+
+    public function testLevelException()
+    {
+        $file = "tests/logs.log";
+        if (file_exists($file)) {
+            unlink($file);
+        }
+        $logger = new Logger($file);
+        try {
+            $logger->log('incorrect_level', "level incorrect");
+        } catch (InvalidArgumentException $e) {
+            $this->assertEquals($e->getMessage(), "Level not supported");
+            return;
+        }
+        $this->fail();
+    }
+
+    public function testNothingException()
+    {
+        $file = "tests/logs.log";
+        if (file_exists($file)) {
+            unlink($file);
+        }
+        $logger = new Logger($file);
+        try {
+            $logger->log("info");
+        } catch (InvalidArgumentException $e) {
+            $this->assertEquals($e->getMessage(), "Message and Exception not set");
+            return;
+        }
+        $this->fail();
     }
 }
