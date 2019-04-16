@@ -7,17 +7,12 @@
   - [Description](#description)
   - [Build](#build)
   - [Changelog](#changelog)
-  - [Modules](#modules)
-    - [Routes](#routes)
-      - [Usage](#usage)
-    - [Menus](#menus)
-      - [Usage-2](#usage-2)
-    - [Options](#options)
-      - [Usage-3](#usage-3)
-  - [Files/Folders architecture](#filesfolders-architecture)
-  - [Configs files](#configs-files)
-    - [site.json](#sitejson)
-    - [settings.json](#settingsjson)
+  - [Badges](#badges)
+    - [Build status](#build-status)
+    - [Coverage](#coverage)
+    - [Code Quality](#code-quality)
+  - [Dependencies](#dependencies)
+  - [Development Dependencies](#development-dependencies)
 
 ## Description
 
@@ -33,152 +28,40 @@ composer install --no-dev --optimize-autoload
 
 see [changelog.md](./changelog.md)
 
-## Modules
+## Badges
 
-Modules are what that will manage the system in himself.
+We're using [shields.io](https://shields.io/) badges
 
-```php
-$module = new Module();
-```
+### Build status
 
-Modules will have multiple constant
-
-### Routes
-
-sitewide (except `/admin/*`) routes can be defined and will point to a function you will have to define
-
-#### Usage
-
-```php
-$function = function($settings) {
-  return "html code";
-}
-$module->addRoute("/regex-to-check-for-the-page/", $function);
-```
-
-### Menus
-
-On the admin-side you can add menus & items
-
-#### Usage-2
-
-```php
-$menu = $module->addMenu("Menu Name");
-
-$pageFunction = function($settings) {
-  return "html code"; //not <html> nor <body>
-}
-
-$menu->addItem("Item Name", $pageFunction);
-```
-
-### Options
-
-#### Usage-3
-
-```php
-$options = $module->addOptionItem("Item Name");
-
-$options->addOption("Option Name", "optionName", OptionTypes::text)
-$options->addOption("optionVar", OptionTypes::Text, {
-  "name": "Name",
-  "placeholder": "placeholder",
-  "default": "defaultValue"
-  // more options will come later
-});
+![build](https://img.shields.io/gitlab/pipeline/delta-wings/adminpanel.svg?style=for-the-badge)
+`https://img.shields.io/gitlab/pipeline/delta-wings/adminpanel.svg?style=for-the-badge`
 
 
-```
+### Coverage
 
-```js
-/*
-possibilité de mettre des routes qui executent des functions
-ajouter des pages dans la section d'admin
-(Module) to initialize & manage the module
-(Menu, Item from Menu) classes to manage adminPanel elements
-(Variables) class to get/set used around the website vars
-(OptionsItem from Item) to have a custom page for settings
-(OptionsTab, Option)
+![coverage](https://img.shields.io/codacy/coverage/ae3cdab2030c4b62aa42d3d0eed40f86.svg?style=for-the-badge)
+`https://img.shields.io/codacy/coverage/ae3cdab2030c4b62aa42d3d0eed40f86.svg?style=for-the-badge`
 
-*/
-$module = new Module();
+### Code Quality
 
-$menu = $module.addMenu("menuName");
-$menu.addItem("itemName", function());
+![Code Quality](https://img.shields.io/codacy/grade/ae3cdab2030c4b62aa42d3d0eed40f86.svg?style=for-the-badge)
+`https://img.shields.io/codacy/grade/ae3cdab2030c4b62aa42d3d0eed40f86.svg?style=for-the-badge`
 
-options = Module.addOptionsMenu("name");
+## Dependencies
 
-optionTab = options.addOptionTab("name");
+- [Composer](https://getcomposer.org/)
+  - [PSR-3](https://www.php-fig.org/psr/psr-3), [PSR-6](https://www.php-fig.org/psr/psr-6)
+  - [Twig](https://twig.symfony.com/)
 
-optionTab.addOption("test", =enum.text);
+## Development Dependencies
 
-//options added will be in the first tab named at the menu name
-//if there is only one tab or no tab we won't show tabs
-options.addOption("test", =enum.text);
-
-//add options if it is equal to something
-//true/false is what it must be to be shown
-//with be in js i think
-options.addOption("option name"=String, enum.text=enumeType, "option to check", "regex to check with", must it true or false)
-
-```
-
-## Files/Folders architecture
-
-- .htaccess (handle file redirection)
-- admin/
-  - .htaccess manage redirection for admin pages (pass throught a verify login script)
-  - index.php
-  - admin.js
-  - admin.css
-  - settings/ (settings files more infos [here](#config-files))
-    - site.json (adminPanel settings (see admin.json section))
-    - modules/
-      - moduleName/
-        - settings.json
-    - admin.json (used to see what to launch on the admin side)
-    - options.json (options for modules & themes to be used site-wide)
-    - templates.json (store the template used on the website with a link to there .php file)
-  - modules/
-    - default/ (a default module will be here)
-      - module.php
-    - moduleName/
-      - module.php
-      - public.php (same as theme)
-
-## Configs files
-
-### site.json
-
-Site-wide settings (don't know if it will be accesible for modules)
-
-Location: `/admin/settings/`
-
-```json
-{
-  "themeUsed": "themeName",
-  "modulesUsed": [
-    "moduleName",
-    "etc"
-  ]
-}
-```
-
-### settings.json
-
-Stock the module variables
-
-Location: `/admin/settings/modules/moduleName/`
-
-```json
-{
-  "variable1": "value1",
-  "list1": [
-    "pouet1",
-    "etc"
-  ],
-  "variableSet1": {
-    "subVariable1": "value2"
-  }
-}
-```
+- [EditorConfig](https://editorconfig.org/)
+- [Git](https://git-scm.com/)
+- [Composer](https://getcomposer.org/)
+  - [PHP Codesniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+  - [Symfony VarDumper](https://symfony.com/doc/current/components/var_dumper.html)
+  - [PHPUnit](https://phpunit.de/)
+  - [PHP Mess Detector](https://phpmd.org/)
+  - [Gitlab](https://gitlab.com/)
+  - [Codacy](codacy.com)
