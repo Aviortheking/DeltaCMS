@@ -32,5 +32,10 @@
         "phpunit/phpunit": "^8.1",
         "codacy/coverage": "^1.4",
         "phpmd/phpmd": "^2.6"
-    }
+	},
+	"scripts": {
+		"phpmd": "phpmd src/ text phpmd",
+		"phpcs": "phpcs --coverage-text --colors=never",
+		"test": "composer run phpmd && composer run phpcs"
+	}
 }
