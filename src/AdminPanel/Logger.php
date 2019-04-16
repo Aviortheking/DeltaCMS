@@ -1,6 +1,6 @@
 <?php
 
-namespace AdminPanel\Logger;
+namespace AdminPanel;
 
 use Psr\Log\AbstractLogger;
 use Psr\Log\InvalidArgumentException;

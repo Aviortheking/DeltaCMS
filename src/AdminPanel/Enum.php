@@ -1,6 +1,6 @@
 <?php
 
-namespace AdminPanel\Classes\Enum;
+namespace AdminPanel;
 
 abstract class Enum
 {
