@@ -30,16 +30,16 @@ class FileCache implements CacheInterface
     /**
      * Cache Constructor
      *
-     * @param string $folder
-     * @param integer|\DateInterval $ttl
+     * @param object $options
      */
-    public function __construct(string $folder = "./cache", $ttl = 86400)
+    public function __construct(object $options)
     {
-        $this->folder = $folder;
+        $this->folder = isset($options->path) ? $options->path . "/" . "fs/" : "./cache";
+        // dd($this->folder);
+        $this->ttl = $this->getTTL(isset($options->ttl) ? $options->ttl : 86400);
         if (!file_exists($this->folder)) {
             mkdir($this->folder, 0777, true);
         }
-        $this->ttl = $this->getTTl($ttl);
     }
 
     public function get($key, $default = null)
