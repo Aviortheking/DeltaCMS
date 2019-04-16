@@ -1,16 +1,31 @@
+
+# Development config
 .vscode/
+/tmp/
+/config/
+
+#Exclude default cache folder
 cache/
 
+# Exclude dependencies
 /vendor/
-composer.lock
 /node_modules/
-/logs/*
-!/logs/.gitkeep
-/src/Modules/*
-!/src/Modules/ModuleName/
-/tmp/
 
-# OS Related (used: https://gitignore.io/)
+# exclude logs
+/logs/*
+*.log
+
+# but allow .gitkeep to keep the folder
+!/logs/.gitkeep
+
+# excludes modules
+/src/Modules/*
+
+# but allow example module
+!/src/Modules/ModuleName/
+
+
+# OS Related Exclusions (used: https://gitignore.io/)
 
 # Linux
 .directory
