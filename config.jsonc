@@ -1,0 +1,32 @@
+{
+	"database": {
+		//driver to use with database
+		"driver": "pdo_mysql",
+
+		// host of database
+		"host": "127.0.0.1",
+
+		// database name
+		"dbname": "aptatio",
+
+		// user to use
+		"user": "aptatio",
+
+		//user's password
+		"password": "aptatio"
+	},
+	"cache": {
+
+		// enable/disable the cache
+		"enabled": "false",
+
+		//path to cache folder
+		"path": "cache/",
+
+		// driver to use with cache
+		"driver": "\\AdminPanel\\Cache\\FileCache",
+		"options": {
+			"ttl": null
+		}
+	}
+}
