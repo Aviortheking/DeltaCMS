@@ -2,8 +2,8 @@
 
 namespace ModuleName\Controller;
 
-use AdminPanel\Classes\Controller;
-use AdminPanel\Classes\Authentificator;
+use AdminPanel\Controller;
+use AdminPanel\Authentificator;
 
 class ExampleController extends Controller
 {
