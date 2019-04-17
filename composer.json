@@ -37,6 +37,8 @@
 		"phpmd": "phpmd src/ text phpmd",
 		"phpunit": "phpunit --coverage-text --colors=never",
 		"phpcs": "phpcs",
-		"test": "composer run phpmd && composer run phpunit"
+		"test": "composer run phpunit",
+		"quality": "composer run phpmd && composer run phpcs",
+		"full": "composer run test && composer run quality"
 	}
 }
