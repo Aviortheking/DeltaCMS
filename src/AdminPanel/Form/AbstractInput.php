@@ -2,13 +2,12 @@
 
 namespace AdminPanel\Form;
 
-class TextInput implements Input
+class AbstractInput implements Input
 {
 
     public function getOptions(): array
     {
-        return array(
-        );
+        return array();
     }
 
     public function processOption(string $optionName, $value): array
@@ -18,7 +17,7 @@ class TextInput implements Input
 
     public function getTemplate(): string
     {
-        $arr = explode('\\', self::class);
+        $arr = explode('\\', get_class($this));
         $tpName = strtolower(
             str_replace(
                 "Input",

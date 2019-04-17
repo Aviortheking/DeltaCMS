@@ -4,12 +4,11 @@ namespace AdminPanel\Form;
 
 use AdminPanel\AdminPanel;
 
-class EntityInput implements Input
+class EntityInput extends AbstractInput
 {
     public function getOptions(): array
     {
         return array(
-            'label',
             'entity'
         );
     }
@@ -24,10 +23,5 @@ class EntityInput implements Input
         return array(
             $optionName => $value
         );
-    }
-
-    public function getTemplate(): string
-    {
-        return "@AdminPanel/form/entity.twig";
     }
 }
