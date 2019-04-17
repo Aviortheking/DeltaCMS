@@ -14,7 +14,7 @@ class Form
     {
         $entity = $this->session->get("form_" . $this->formname);
         if (isset($entity)) {
-            foreach ($fields as $name => $value) {
+            foreach (array_keys((array) $fields) as $name) {
                 if (filter_input(INPUT_POST, $name) === null) {
                     return false;
                 }
@@ -70,7 +70,6 @@ class Form
 
         if (isset($forms[$formname])) {
             $this->formname = $formname;
-            $tempEntity = $this->session->get("form_" . $this->formname);
             $form = $forms[$formname];
             if ($this->isSubmitting($form->fields)) {
                 dd("submitting");
