@@ -12,4 +12,9 @@ class ChoiceInput extends TextInput
             'choices'
         );
     }
+
+    public function getTemplate(): string
+    {
+        return "@AdminPanel/form/choice.twig";
+    }
 }

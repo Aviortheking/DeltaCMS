@@ -11,4 +11,9 @@ class DateInput extends TextInput
             'value',
         );
     }
+
+    public function getTemplate(): string
+    {
+        return "@AdminPanel/form/date.twig";
+    }
 }

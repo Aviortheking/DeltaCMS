@@ -18,6 +18,13 @@ class TextInput implements Input
 
     public function getTemplate(): string
     {
-        return "@AdminPanel/form/text.twig";
+        $tpName = strtolower(
+            str_replace(
+                "Input",
+                "",
+                str_split('\\', self::class)[1]
+            )
+        );
+        return "@AdminPanel/form/" . $tpName . ".twig";
     }
 }
