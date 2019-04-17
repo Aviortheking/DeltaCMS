@@ -6,22 +6,25 @@ image: php:latest
 cache:
   paths:
   - vendor/
-  - node_modules/
 
 stages:
-  - build
-  - test
+  - Build
+  - Test
+  - Code Quality
+  - Package
 
 before_script:
-- apt-get update -yqq
-- apt-get install -yqq git libzip-dev libmcrypt-dev libpq-dev libcurl4-gnutls-dev libicu-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev
-# Install PHP extensions
-- docker-php-ext-install mbstring pdo_pgsql curl json intl gd xml zip bz2 opcache
-# Install & enable Xdebug for code coverage reports
-- pecl install xdebug
-- docker-php-ext-enable xdebug
-# Install and run Composer
-- curl -sS https://getcomposer.org/installer | php
+  - apt-get update -yqq
+  - apt-get install -yqq git # libicu-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev
+  # Install PHP extensions
+  - docker-php-ext-install json
+  # json is neccesary
+  # Install & enable Xdebug for code coverage reports
+  - pecl install xdebug
+  - docker-php-ext-enable xdebug
+  # Install and run Composer
+  - curl -sS https://getcomposer.org/installer | php
+
 
 # Bring in any services we need http://docs.gitlab.com/ee/ci/docker/using_docker_images.html#what-is-a-service
 # See http://docs.gitlab.com/ce/ci/services/README.html for examples.
@@ -37,17 +40,32 @@ variables:
 # Run our tests
 # If Xdebug was installed you can generate a coverage report and see code coverage metrics.
 build:
-  stage: build
+  stage: Build
   script:
     - php composer.phar install
 
-phpmd:
-  stage: test
+"PHP Mess Detector":
+  stage: Code Quality
   script:
     - php composer.phar run phpmd
 
-phpcs:
-  stage: test
+"PHP Unit":
+  stage: Test
   script:
     - php composer.phar run phpunit
     - vendor/bin/codacycoverage clover tmp/code-coverage.xml
+
+"PHP CodeSniffer":
+  stage: Code Quality
+  script: php composer.phar run phpcs
+
+"Package":
+  stage: Package
+  artifacts:
+    paths:
+      - package.zip
+      - package.tar.gz
+  script:
+    - php composer.phar install --no-dev --optimize-autoload
+    - cat production.txt | zip package.zip -r -@
+    - tar -cvzf package.tar.gz -T production.txt

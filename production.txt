@@ -1,0 +1,7 @@
+logs/
+src/
+vendor/
+.htaccess
+CHANGELOG.md
+LICENSE
+README.md
