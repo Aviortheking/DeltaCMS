@@ -24,7 +24,7 @@ $caches = $cache->getMultiple(array(
 
 //if cache don't exist create it!
 $cachesBool = $caches["routes"] === null || $caches['templates'] === null || $caches['forms'] === null;
-if (!($ap->isCacheEnabled()) || $cachesBool ) {
+if (!($ap->isCacheEnabled()) || $cachesBool) {
     $modulesDIR = __DIR__ . "/Modules";
     $modules = array_diff(scandir($modulesDIR), array('..', '.'));
     /** @var string $module */
