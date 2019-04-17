@@ -66,6 +66,6 @@ build:
       - package.zip
       - package.tar.gz
   script:
-    - php composer.phar install --no-dev --optimize-autoload
+    - php composer.phar install --no-dev --optimize-autoloader
     - cat production.txt | zip package.zip -r -@
     - tar -cvzf package.tar.gz -T production.txt
