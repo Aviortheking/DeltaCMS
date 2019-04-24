@@ -1,0 +1,85 @@
+---
+kind: pipeline
+name: Build
+
+steps:
+- name: prepare
+  image: php:latest
+  commands:
+  - chmod +x prepare.sh && ./prepare.sh
+- name: build
+  image: php:latest
+  commands:
+  - chmod +x prepare.sh && ./prepare.sh
+  - php composer.phar install
+---
+kind: pipeline
+name: Test
+
+depends_on:
+  - Build
+
+steps:
+- name: PHP Unit
+  image: php:latest
+  commands:
+  - chmod +x prepare.sh && ./prepare.sh
+  - php composer.phar run phpunit
+  - vendor/bin/codacycoverage clover tmp/code-coverage.xml
+  environment:
+    CODACY_PROJECT_TOKEN:
+      from_secret: CODACY_PROJECT_TOKEN
+
+---
+kind: pipeline
+name: Code Quality
+
+depends_on:
+  - Build
+
+steps:
+- name: PHP Code Sniffer
+  image: php:latest
+  commands:
+  - chmod +x prepare.sh && ./prepare.sh
+  - php composer.phar run phpcs
+- name: PHP Mess Detector
+  image: php:latest
+  commands:
+  - chmod +x prepare.sh && ./prepare.sh
+  - php composer.phar run phpmd
+
+
+---
+kind: pipeline
+name: Package
+
+depends_on:
+  - Code Quality
+  - Test
+
+steps:
+- name: prod
+  image: php:latest
+  commands:
+  - chmod +x prepare.sh && ./prepare.sh
+  - php composer.phar install --no-dev --optimize-autoloader
+  - cat production.txt | zip AdminPanel.zip -r -@
+  - tar -cvzf AdminPanel.tar.gz -T production.txt
+  when:
+    event: tag
+
+- name: release
+  image: plugins/gitea-release
+  settings:
+    api_key:
+      from_secret: gitea_token
+    base_url: https://git.delta-wings.net/
+    files:
+      - AdminPanel.zip
+      - AdminPanel.tar.gz
+    checksum:
+      - md5
+      - sha1
+  when:
+    event: tag
