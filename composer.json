@@ -37,7 +37,9 @@
 		"phpmd": "phpmd src/ text phpmd",
 		"phpunit": "phpunit --coverage-text --colors=never",
 		"phpcs": "phpcs",
-		"test": "composer run phpunit",
+		"codacy": "codacycoverage clover tmp/code-coverage.xml",
+
+		"test": "composer run phpunit && composer run codacy",
 		"quality": "composer run phpmd && composer run phpcs",
 		"full": "composer run test && composer run quality"
 	}
