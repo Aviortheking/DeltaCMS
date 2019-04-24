@@ -1,7 +1,7 @@
 #/bin/bash
 
 apt-get update -yqq
-apt-get install -yqq zip tar
+apt-get install -yqq zip tar git
 docker-php-ext-install json
 pecl install xdebug
 docker-php-ext-enable xdebug
