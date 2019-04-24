@@ -5,3 +5,5 @@ vendor/
 CHANGELOG.md
 LICENSE
 README.md
+index.html
+config.jsonc
