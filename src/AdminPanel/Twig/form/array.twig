@@ -1,0 +1,15 @@
+{% extends "@AdminPanel/form/_default.twig" %}
+
+{% set name = "div" %}
+
+{% block content %}
+	{% for item in options.elements %}
+		<div>
+			{{item.render()|raw}}
+		</div>
+	{% endfor %}
+{% endblock %}
+
+{% block after %}
+	<button type="button" data-for="{{ attributes.name }}">Ajouter</button>
+{% endblock %}
