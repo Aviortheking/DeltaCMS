@@ -31,7 +31,7 @@ class Logger extends AbstractLogger
         $this->file = $file;
     }
 
-    public static function fillMessage($message, $context)
+    private function fillMessage($message, $context)
     {
         foreach ($context as $key => $value) {
             $message = preg_replace("/\{$key\}/", $value, $message);
