@@ -1,6 +1,6 @@
 <?php
 
-use AdminPanel\AdminPanel;
+use DeltaCMS\DeltaCMS;
 
 session_start();
 ini_set('display_errors', 'On');
@@ -9,7 +9,7 @@ ini_set('display_errors', 'On');
 $loader = require_once __DIR__ . "/../vendor/autoload.php";
 
 //die;
-$ap = AdminPanel::getInstance();
+$ap = DeltaCMS::getInstance();
 // dd($ap);
 /*
 1: get all the template folders
@@ -94,7 +94,7 @@ foreach ($caches['routes'] as $key => $value) {
         $loader->loadClass($value->controller);
         $function = $value->function;
         // dump($function);
-        /** @var AdminPanel\Classes\Controller $controller */
+        /** @var DeltaCMS\Classes\Controller $controller */
         $controller = new $value->controller();
         // dd(new $routeArgs->controller());
         if ($composants) {

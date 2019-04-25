@@ -1,9 +1,0 @@
-{% extends "@AdminPanel/form/_default.twig" %}
-
-{% block after %}
-	<datalist id="{{ attributes.list }}">
-		{% for element in options.list %}
-			<option>{{element}}</option>
-		{% endfor %}
-	</datalist>
-{% endblock %}

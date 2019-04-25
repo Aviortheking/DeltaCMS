@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>{{ title }}</title>
+	{% block styles %}{% endblock %}
+	{% block scripts %}{% endblock %}
+	<script>
+		const deleteClick = (ev) => {
+			console.log(ev);
+			let btn = ev.target;
+			console.log(btn.parentElement);
+			btn.parentElement.remove();
+		}
+
+		const addClick = (ev) => {
+			let btn = ev.target;
+			let content = document.getElementById(btn.getAttribute("data-for"));
+			if (!content.hasAttribute("data-length")) {
+				content.setAttribute("data-length", content.children.length);
+			}
+			let length = parseInt(content.getAttribute("data-length"));
+			let placeholder = content.getAttribute("data-element").replace(/__unique__/g, length + 1);
+			let el = document.createElement("div");
+			el.innerHTML = placeholder;
+			content.appendChild(el);
+			content.setAttribute("data-length", length + 1);
+			reloadDeleteBtns();
+
+		}
+
+		const reloadDeleteBtns = () => {
+			let ele = document.querySelectorAll("[data-element]");
+			ele.forEach(element => {
+				for (const child of element.children) {
+					if (child.children.item(1) === null) {
+						let deletebtn = document.createElement("button");
+						deletebtn.innerText = "Suprimmer";
+						deletebtn.type = "button";
+						deletebtn.addEventListener("click", deleteClick);
+						child.appendChild(deletebtn);
+					} else {
+						child.children.item(1).addEventListener("click", deleteClick);
+					}
+				}
+			});
+		}
+
+		function init() {
+			reloadDeleteBtns();
+			let fore = document.querySelectorAll("[data-for]");
+			fore.forEach(element => {
+				element.addEventListener("click", addClick);
+			});
+		}
+	</script>
+
+</head>
+<body>
+	{% block body %}{% endblock %}
+</body>
+<script>
+init();
+</script>
+</html>

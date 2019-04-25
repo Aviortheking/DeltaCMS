@@ -24,7 +24,7 @@
 		"path": "cache/",
 
 		// driver to use with cache
-		"driver": "\\AdminPanel\\Cache\\FileCache",
+		"driver": "\\DeltaCMS\\Cache\\FileCache",
 		"options": {
 			"ttl": null
 		}

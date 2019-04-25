@@ -60,8 +60,8 @@ steps:
   commands:
   - chmod +x prepare.sh && ./prepare.sh
   - php composer.phar install --no-dev --optimize-autoloader
-  - cat production.txt | zip AdminPanel.zip -r -@
-  - tar -cvzf AdminPanel.tar.gz -T production.txt
+  - cat production.txt | zip DeltaCMS.zip -r -@
+  - tar -cvzf DeltaCMS.tar.gz -T production.txt
   when:
     event: tag
 
@@ -72,8 +72,8 @@ steps:
       from_secret: gitea_token
     base_url: https://git.delta-wings.net/
     files:
-      - AdminPanel.zip
-      - AdminPanel.tar.gz
+      - DeltaCMS.zip
+      - DeltaCMS.tar.gz
     checksum:
       - md5
       - sha1

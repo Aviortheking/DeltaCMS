@@ -54,14 +54,14 @@ _([ci.delta-wings.net](https://ci.delta-wings.net))_
 
 ### Coverage
 
-_([Codacy](https://app.codacy.com/project/Aviorleking/AdminPanel/dashboard))_
+_([Codacy](https://app.codacy.com/project/Aviorleking/DeltaCMS/dashboard))_
 
 ![coverage](https://img.shields.io/codacy/coverage/bf7f9ac73707426e9afc4b9daa950039.svg?style=for-the-badge)
 `https://img.shields.io/codacy/coverage/bf7f9ac73707426e9afc4b9daa950039.svg?style=for-the-badge`
 
 ### Code Quality
 
-_([Codacy](https://app.codacy.com/project/Aviorleking/AdminPanel/dashboard))_
+_([Codacy](https://app.codacy.com/project/Aviorleking/DeltaCMS/dashboard))_
 
 ![Code Quality](https://img.shields.io/codacy/grade/bf7f9ac73707426e9afc4b9daa950039.svg?style=for-the-badge)
 `https://img.shields.io/codacy/grade/bf7f9ac73707426e9afc4b9daa950039.svg?style=for-the-badge`
@@ -84,6 +84,6 @@ _([Codacy](https://app.codacy.com/project/Aviorleking/AdminPanel/dashboard))_
   - [PHP Mess Detector](https://phpmd.org/)
 - Hosting
   - [Gitlab](https://gitlab.com/) _Project url [here](https://gitlab.com/delta-wings/adminpanel)_
-  - [Gitea](https://gitea.io/) _Current server [here](https://git.delta-wings.net/Avior/AdminPanel)_
+  - [Gitea](https://gitea.io/) _Current server [here](https://git.delta-wings.net/Avior/DeltaCMS)_
   - [Drone](https://drone.io/) _Current server [here](https://ci.delta-wings.net/)_
-  - [Codacy](https://codacy.com/) _Project Dashboard [here](https://app.codacy.com/project/Aviorleking/AdminPanel/dashboard)_
+  - [Codacy](https://codacy.com/) _Project Dashboard [here](https://app.codacy.com/project/Aviorleking/DeltaCMS/dashboard)_

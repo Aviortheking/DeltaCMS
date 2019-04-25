@@ -1,8 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use AdminPanel\Cache\FileCache;
-use AdminPanel\Logger;
+use DeltaCMS\Cache\FileCache;
+use DeltaCMS\Logger;
 use Psr\Log\InvalidArgumentException;
 
 final class LoggerTest extends TestCase

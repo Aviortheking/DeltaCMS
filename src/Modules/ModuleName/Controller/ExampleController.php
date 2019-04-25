@@ -2,8 +2,8 @@
 
 namespace ModuleName\Controller;
 
-use AdminPanel\Controller;
-use AdminPanel\Authentificator;
+use DeltaCMS\Controller;
+use DeltaCMS\Authentificator;
 
 class ExampleController extends Controller
 {

@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use AdminPanel\Cache\SessionCache;
+use DeltaCMS\Cache\SessionCache;
 
 final class SessionCacheTest extends TestCase
 {

@@ -11,14 +11,14 @@
     ],
     "autoload": {
         "psr-4": {
-            "AdminPanel\\": "src/AdminPanel",
+            "DeltaCMS\\": "src/DeltaCMS",
             "": "src/Modules"
         },
         "exclude-from-classmap": [
             "src/Modules"
         ],
         "files": [
-            "src/AdminPanel/Functions.php"
+            "src/DeltaCMS/Functions.php"
         ]
     },
     "require": {

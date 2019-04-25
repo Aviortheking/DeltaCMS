@@ -1,0 +1,15 @@
+{% extends "@DeltaCMS/form/_default.twig" %}
+
+{% block after %}
+	<datalist id="{{ attributes.list }}">
+		{% for entity in options.entities %}
+			{% if entity.name is not null %}
+				<option>{{entity.name}}</option>
+			{% elseif entity.firstname is not null %}
+				<option>{{entity.firstname}}</option>
+			{% else %}
+				<option>{{entity.id}}</option>
+			{% endif %}
+		{% endfor %}
+	</datalist>
+{% endblock %}
