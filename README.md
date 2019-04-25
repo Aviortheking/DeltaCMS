@@ -1,14 +1,15 @@
 # Admin Panel
 
-![build](https://img.shields.io/drone/build/Avior/AdminPanel.svg?server=https%3A%2F%2Fci.delta-wings.net&style=for-the-badge)
-![coverage](https://img.shields.io/codacy/coverage/ae3cdab2030c4b62aa42d3d0eed40f86.svg?style=for-the-badge)
-![Code Quality](https://img.shields.io/codacy/grade/ae3cdab2030c4b62aa42d3d0eed40f86.svg?style=for-the-badge)
+[![build](https://img.shields.io/drone/build/DeltaCMS/Core.svg?server=https%3A%2F%2Fci.delta-wings.net&style=for-the-badge)](https://ci.delta-wings.net/DeltaCMS/Core/)
+![coverage](https://img.shields.io/codacy/coverage/bf7f9ac73707426e9afc4b9daa950039.svg?style=for-the-badge)
+![Code Quality](https://img.shields.io/codacy/grade/bf7f9ac73707426e9afc4b9daa950039.svg?style=for-the-badge)
 
 ## Table of Content
 
 - [Admin Panel](#admin-panel)
   - [Table of Content](#table-of-content)
   - [Description](#description)
+  - [Install](#install)
   - [Build](#build)
   - [Changelog](#changelog)
   - [Badges](#badges)
@@ -22,11 +23,19 @@
 
 WIP
 
+## Install
+
+Fetch the latest release from the release tab [here](https://git.delta-wings.net/DeltaCMS/Core/releases)
+
 ## Build
+
+run this command in the terminal
 
 ```console
 composer install --no-dev --optimize-autoload
 ```
+
+Now point your web server to the `public` folder and tada =) your website is up
 
 ## Changelog
 
@@ -40,22 +49,22 @@ We're using [shields.io](https://shields.io/) badges
 
 _([ci.delta-wings.net](https://ci.delta-wings.net))_
 
-![build](https://img.shields.io/drone/build/Avior/AdminPanel.svg?server=https%3A%2F%2Fci.delta-wings.net&style=for-the-badge)
-`https://img.shields.io/drone/build/AdminPanel/Core.svg?server=https%3A%2F%2Fci.delta-wings.net&style=for-the-badge`
+![build](https://img.shields.io/drone/build/DeltaCMS/Core.svg?server=https%3A%2F%2Fci.delta-wings.net&style=for-the-badge)
+`https://img.shields.io/drone/build/DeltaCMS/Core.svg?server=https%3A%2F%2Fci.delta-wings.net&style=for-the-badge`
 
 ### Coverage
 
 _([Codacy](https://app.codacy.com/project/Aviorleking/AdminPanel/dashboard))_
 
-![coverage](https://img.shields.io/codacy/coverage/ae3cdab2030c4b62aa42d3d0eed40f86.svg?style=for-the-badge)
-`https://img.shields.io/codacy/coverage/ae3cdab2030c4b62aa42d3d0eed40f86.svg?style=for-the-badge`
+![coverage](https://img.shields.io/codacy/coverage/bf7f9ac73707426e9afc4b9daa950039.svg?style=for-the-badge)
+`https://img.shields.io/codacy/coverage/bf7f9ac73707426e9afc4b9daa950039.svg?style=for-the-badge`
 
 ### Code Quality
 
 _([Codacy](https://app.codacy.com/project/Aviorleking/AdminPanel/dashboard))_
 
-![Code Quality](https://img.shields.io/codacy/grade/ae3cdab2030c4b62aa42d3d0eed40f86.svg?style=for-the-badge)
-`https://img.shields.io/codacy/grade/ae3cdab2030c4b62aa42d3d0eed40f86.svg?style=for-the-badge`
+![Code Quality](https://img.shields.io/codacy/grade/bf7f9ac73707426e9afc4b9daa950039.svg?style=for-the-badge)
+`https://img.shields.io/codacy/grade/bf7f9ac73707426e9afc4b9daa950039.svg?style=for-the-badge`
 
 ## Dependencies
 
