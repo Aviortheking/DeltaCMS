@@ -2,20 +2,84 @@
 
 namespace AdminPanel\Form;
 
-class AbstractInput implements Input
+use AdminPanel\AdminPanel;
+
+/**
+ * this abstract class has default functionnality for all working
+ * before doing `parent::function` please see what it does
+ */
+abstract class AbstractInput implements Input
 {
+
+    protected $attributes = array();
+    protected $options = array();
+
+    public function __construct()
+    {
+        $arr = explode('\\', get_class($this));
+        $this->setOption("type", strtolower(
+            str_replace(
+                "Input",
+                "",
+                $arr[count($arr) - 1]
+            )
+        ));
+    }
+
+    public function getAttributesList(): array
+    {
+        return array(
+            'name',
+            'type',
+            'id',
+            'value',
+            'placeholder',
+            'style'
+        );
+    }
+
+
+    public function getOptionsList(): array
+    {
+        return array(
+            'label',
+            'value'
+        );
+    }
+
+    public function getAttributes(): array
+    {
+        return $this->attributes;
+    }
 
     public function getOptions(): array
     {
-        return array();
+        return $this->options;
     }
 
-    public function processOption(string $optionName, $value): array
+    public function getOption(string $name)
     {
-        return array($optionName => $value);
+        return $this->options[$name];
     }
 
-    public function getTemplate(): string
+    public function setOption(string $name, $value)
+    {
+        if (in_array($name, $this->getOptionsList())) {
+            $this->options[$name] = $value;
+        }
+        if (in_array($name, $this->getAttributesList())) {
+            if (in_array($name, array("id", "name")) &&
+                !array_key_exists("id", $this->attributes) &&
+                !array_key_exists("name", $this->attributes)
+            ) {
+                $this->attributes["name"] = $value;
+                $this->attributes["id"] = $value;
+            }
+            $this->attributes[$name] = $value;
+        }
+    }
+
+    public function render(): string
     {
         $arr = explode('\\', get_class($this));
         $tpName = strtolower(
@@ -25,6 +89,17 @@ class AbstractInput implements Input
                 $arr[count($arr) - 1]
             )
         );
-        return "@AdminPanel/form/" . $tpName . ".twig";
+        return $this->getTwig()->render(
+            "@AdminPanel/form/" . $tpName . ".twig",
+            array(
+                'attributes' => $this->attributes,
+                'options' => $this->options
+            )
+        );
+    }
+
+    protected function getTwig()
+    {
+        return AdminPanel::getInstance()->getTwig();
     }
 }

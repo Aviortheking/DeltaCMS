@@ -6,22 +6,40 @@ use AdminPanel\AdminPanel;
 
 class EntityInput extends AbstractInput
 {
-    public function getOptions(): array
+    public function __construct()
     {
-        return array(
-            'entity'
+        $this->setOption("type", "text");
+    }
+
+    public function getOptionsList(): array
+    {
+        return array_merge(
+            parent::getOptionsList(),
+            array(
+                'entity'
+            )
         );
     }
 
-    public function processOption(string $optionName, $value): array
+    public function setOption(string $name, $value)
     {
-        if ($optionName === 'entity') {
-            return array(
-                'entities' => AdminPanel::getInstance()->getEm()->getRepository($value)->findAll()
-            );
+        if ($name === 'entity') {
+            $this->options["entities"] = AdminPanel::getInstance()->getEm()->getRepository($value)->findAll();
+        } elseif ($name === "name") {
+            $this->attributes["list"] = $value . "_list";
         }
-        return array(
-            $optionName => $value
-        );
+        parent::setOption($name, $value);
+    }
+
+    public function getOption($name)
+    {
+        if ($name === "value") {
+            $repo = AdminPanel::getInstance()->getEm()->getRepository($this->options["entity"]);
+            return $repo->findOneBy(array(
+                'name' => $this->options["value"]
+            ));
+        } else {
+            return parent::getOption($name);
+        }
     }
 }

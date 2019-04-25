@@ -4,29 +4,62 @@ namespace AdminPanel\Form;
 
 interface Input
 {
+
     /**
-     * get definable options in form
-     * some are processed elsewhere like
-     * name, value
+     * Get list of used in this input
      *
-     * @return array
+     * @return array array containing options
+     */
+    public function getAttributesList(): array;
+
+    /**
+     * get options that will be passed into the final object
+     *
+     * @return void
+     */
+    public function getAttributes(): array;
+
+    /**
+     * Get list of options usable by this input
+     *
+     * @return array array containing options
+     */
+    public function getOptionsList(): array;
+
+    /**
+     * get options that will be passed into the final object
+     *
+     * @return void
      */
     public function getOptions(): array;
 
     /**
-     * run things when you got option
+     * get a single option that will be passed in the final object
+     * (option can either go in attributes or options)
      *
-     * @param string $optionName
-     * @param mixed $value
+     * @param string $name option's name
      *
-     * @return array
+     * @return mixed option's value
      */
-    public function processOption(string $optionName, $value): array;
+    public function getOption(string $name);
 
     /**
-     * Get template file
+     * Process the options given by php or json
+     *
+     * (you can do whatever you want with it)
+     *
+     * @param string $name name of the option
+     * @param mixed $value value of element
+     *
+     * @return void
+     */
+    public function setOption(string $name, $value);
+
+    /**
+     * return the html to render the current input
+     *
      *
      * @return string
      */
-    public function getTemplate(): string;
+    public function render(): string;
 }
