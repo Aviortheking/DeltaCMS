@@ -3,15 +3,11 @@ kind: pipeline
 name: Build
 
 steps:
-- name: prepare
+- name: Build
   image: php:latest
   commands:
   - chmod +x prepare.sh && ./prepare.sh
-- name: build
-  image: php:latest
-  commands:
-  - chmod +x prepare.sh && ./prepare.sh
-  - php composer.phar install
+
 ---
 kind: pipeline
 name: Test
