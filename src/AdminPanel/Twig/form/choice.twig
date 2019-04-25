@@ -1,17 +1,13 @@
 {% extends "@AdminPanel/form/_default.twig" %}
 
-{% block form %}
-{% if label %}
-	<label for="{{ name }}">{{ label }}</label>
-{% endif %}
-<select name="{{ name }}" id="{{ name }}"&nbsp;{% for index, item in attr %}{{index}}="{{item}}"&nbsp;{% endfor %}>
-	{% for choice in choices %}
-	{% if loop.index0 == value %}
-		<option value="{{ loop.index0 }}" selected>{{ choice }}</option>
-	{% else %}
-		<option value="{{ loop.index0 }}">{{ choice }}</option>
-	{% endif %}
+{% set name = "select" %}
 
+{% block content %}
+	{% for choice in options.choices %}
+		{% if choice == options.value %}
+			<option selected>{{ choice }}</option>
+		{% else %}
+			<option>{{ choice }}</option>
+		{% endif %}
 	{% endfor %}
-</select>
 {% endblock %}

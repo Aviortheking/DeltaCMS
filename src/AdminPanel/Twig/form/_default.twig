@@ -1,14 +1,20 @@
-{# Default label if type is not found #}
 {% spaceless %}
-	{% block form %}
-		{% if label %}
-			<label for="{{ name }}">{{label}}</label>
-		{% endif %}
-		<input
-			type="{{ type }}"
-			name="{{ name }}"
-			id="{{ name }}"
-			{% for index, item in attr %}{{index}}="{{item}}" {% endfor %}
-		/>
-{% endblock %}
+	{% if name is null %}
+		{% set name = "input" %}
+	{% endif %}
+
+	{% block before %}{% endblock %}
+	{% if options.label %}
+		<label for="{{atributes.id }}">{{ options.label }}</label>
+	{% endif %}
+	<{{ name }}
+		{% for index, item in attributes %}{{index}}="{{item}}" {% endfor %}
+	{% if name == "input" %}
+	/>
+	{% else %}
+	>
+		{% block content %}{% endblock %}
+	</{{ name }}>
+	{% endif %}
+	{% block after %}{% endblock %}
 {% endspaceless %}

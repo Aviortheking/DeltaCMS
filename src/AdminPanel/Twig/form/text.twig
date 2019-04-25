@@ -1,9 +1,1 @@
 {% extends "@AdminPanel/form/_default.twig" %}
-
-{% block form %}
-
-	{% if label %}
-		<label for="{{name}}" />{{label}}</label>
-	{% endif %}
-	<input {% if value is not null %}value="{{value}}"{% endif %} type="text" name="{{name}}" id="{{name}}"&nbsp;{% for index, item in attr %}{{index}}="{{item}}"&nbsp;{% endfor %}/>
-{% endblock %}
