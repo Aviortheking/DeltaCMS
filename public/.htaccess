@@ -3,18 +3,15 @@
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 
-	RewriteCond %{REQUEST_FILENAME} !-f [OR]
-	RewriteCond %{REQUEST_FILENAME} -f
+	RewriteCond %{REQUEST_FILENAME} !-f
 
-	RewriteRule ^(.*)$ src/index.php [L]
+	RewriteRule ^(.*)$ index.php [L]
 </IfModule>
 
-
-# RedirectMatch 403 ^/vendor/*$
-ErrorDocument 403 /src/index.php
+ErrorDocument 403 /index.php
 
 
-<FilesMatch ".*\.(php|html|twig|json)$">
+<FilesMatch ".*\.(php)$">
 	<IfVersion < 2.4>
 		Order Allow,Deny
 		Deny from all

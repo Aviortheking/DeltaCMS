@@ -16,6 +16,11 @@ $ap = AdminPanel::getInstance();
 2: match routes directly with modules
 */
 $cache = $ap->getCache();
+
+if (!$ap->isCacheEnabled()) {
+    $cache->clear();
+}
+
 $caches = $cache->getMultiple(array(
     'routes',
     'templates',
@@ -24,8 +29,9 @@ $caches = $cache->getMultiple(array(
 
 //if cache don't exist create it!
 $cachesBool = $caches["routes"] === null || $caches['templates'] === null || $caches['forms'] === null;
-if (!($ap->isCacheEnabled()) || $cachesBool) {
-    $modulesDIR = __DIR__ . "/Modules";
+if (!$ap->isCacheEnabled() || $cachesBool) {
+    $cache->clear();
+    $modulesDIR = dirname(__DIR__) . "/src/Modules";
     $modules = array_diff(scandir($modulesDIR), array('..', '.'));
     /** @var string $module */
     foreach ($modules as $module) {
@@ -65,7 +71,8 @@ if (!($ap->isCacheEnabled()) || $cachesBool) {
     }
     $caches = $cache->getMultiple(array(
         'routes',
-        'templates'
+        'templates',
+        'forms'
     ));
 }
 //load each templates
