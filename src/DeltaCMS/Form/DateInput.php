@@ -6,7 +6,7 @@ use DateTime;
 
 class DateInput extends AbstractInput
 {
-    public function setOption($name, $value)
+    public function setOption(string $name, $value)
     {
         if ($name === "value") {
             $this->attributes["value"] = (new DateTime($value))->format('Y-m-d');
