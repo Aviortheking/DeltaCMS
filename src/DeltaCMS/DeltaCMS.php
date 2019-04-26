@@ -37,6 +37,7 @@ class DeltaCMS
             $ap = self::$instance = new self();
             $ap->root = dirname(__DIR__);
             $ap->settings = jsonc_decode(dirname($ap->root) . "/config.jsonc", false);
+            $ap->settings->cache->path = dirname($ap->root) . DIRECTORY_SEPARATOR . $ap->settings->cache->path;
             $ap->loader = new FilesystemLoader();
             $ap->addLoaderFolder($ap->root . "/DeltaCMS/Twig");
             // $ap->setLoader(new FilesystemLoader());
@@ -64,7 +65,7 @@ class DeltaCMS
     public function getTwig()
     {
         return isset($this->twig) ? $this->twig : $this->twig = new Environment($this->loader, [
-            'cache' => $this->isCacheEnabled() ? dirname($this->root) . $this->settings->cache->path . '/twig/' : false
+            'cache' => $this->isCacheEnabled() ? $this->settings->cache->path . '/twig/' : false
         ]);
     }
 
