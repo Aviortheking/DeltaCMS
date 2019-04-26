@@ -6,6 +6,7 @@ use Psr\Log\AbstractLogger;
 use Psr\Log\InvalidArgumentException;
 
 use Exception;
+use DeltaCMS\Exception\FileException;
 
 class Logger extends AbstractLogger
 {
@@ -28,11 +29,14 @@ class Logger extends AbstractLogger
     public function __construct($file = "./logs.log")
     {
         if (!file_exists($file)) {
-            $ressource = fopen($file, 'w');
-            if ($ressource === false) {
-                throw new Exception("File at " . $file . " can't be created. exiting", 1);
+            try {
+                $ressource = fopen($file, 'w');
+                if ($ressource !== false) {
+                    fclose($ressource);
+                }
+            } catch (Exception $e) {
+                throw new FileException("File can't be created");
             }
-            fclose($ressource);
         }
         $this->file = $file;
     }
