@@ -32,15 +32,18 @@
         "symfony/var-dumper": "^4.2",
         "phpunit/phpunit": "^8.1",
         "codacy/coverage": "^1.4",
-        "phpmd/phpmd": "^2.6"
+        "phpmd/phpmd": "^2.6",
+        "phpstan/phpstan": "^0.11.5"
 	},
 	"scripts": {
-		"phpmd": "phpmd src/ text phpmd",
 		"phpunit": "phpunit --coverage-text --colors=never",
-		"phpcs": "phpcs",
 		"codacy": "codacycoverage clover tmp/code-coverage.xml",
+		"phpstan": "phpstan analyse src/DeltaCMS public tests --level=max",
 
-		"test": "composer run phpunit && composer run codacy",
+		"phpcs": "phpcs",
+		"phpmd": "vendor/bin/phpmd . text phpmd --exclude vendor/,cache/",
+
+		"test": "composer run phpunit && composer run phpstan",
 		"quality": "composer run phpmd && composer run phpcs",
 		"full": "composer run test && composer run quality"
 	}
