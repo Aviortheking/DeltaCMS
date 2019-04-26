@@ -42,7 +42,7 @@ class SessionCache extends AbstractCache
         }
         $_SESSION[$key] = array(
             "value" => $value,
-            "ttl" => time() + ($ttl != null ? $this->getTTL($ttl) : $this->ttl)
+            "ttl" => time() + ($ttl !== null ? $this->getTTL($ttl) : $this->ttl)
         );
         return true;
     }
