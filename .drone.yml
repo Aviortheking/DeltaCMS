@@ -26,6 +26,12 @@ steps:
     CODACY_PROJECT_TOKEN:
       from_secret: CODACY_PROJECT_TOKEN
 
+- name: PHPStan
+  image: php:latest
+  commands:
+  - chmod +x prepare.sh && ./prepare.sh
+  - php composer.phar run phpstan
+
 ---
 kind: pipeline
 name: Code Quality
