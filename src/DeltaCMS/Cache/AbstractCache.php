@@ -6,16 +6,6 @@ use Psr\SimpleCache\CacheInterface;
 
 abstract class AbstractCache implements CacheInterface
 {
-    abstract public function get($key, $default = null);
-
-    abstract public function set($key, $value, $ttl = null);
-
-    abstract public function delete($key);
-
-    abstract public function clear();
-
-    abstract public function has($key);
-
     public function getMultiple($keys, $default = null)
     {
         if (!is_iterable($keys)) {
@@ -34,7 +24,7 @@ abstract class AbstractCache implements CacheInterface
     public function setMultiple($values, $ttl = null)
     {
         if (!is_iterable($values)) {
-            throw new InvalidArgumentException('values are not iterable');
+            throw new InvalidArgumentException('Values are not Iterable');
         }
         foreach ($values as $key => $value) {
             if (!$this->checkKey($key)) {
@@ -72,16 +62,24 @@ abstract class AbstractCache implements CacheInterface
         return preg_match('/^[A-Za-z0-9_.]{1,64}$/', $key);
     }
 
-    protected function getTTL($ttl)
+    /**
+     * return the time to live
+     *
+     * @param int|\DateInterval $ttl
+     *
+     * @return int
+     */
+    protected function getTTL($ttl): int
     {
         if (is_int($ttl)) {
             return $ttl;
         } else {
             return
-                ((($ttl->y * 365 + $ttl->m * 30 + $ttl->d
-                ) * 24 + $ttl->h
-                ) * 60 + $ttl->i
-                ) * 60 + $ttl->s;
+                ((($ttl->y * 365 + $ttl->m * 30 + $ttl->d //translate to days
+                ) * 24 + $ttl->h //translate to hours
+                ) * 60 + $ttl->i //translate to minutes
+                ) * 60 + $ttl->s //translate to seconds
+            ;
         }
     }
 }
