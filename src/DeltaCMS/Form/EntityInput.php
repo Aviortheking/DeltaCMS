@@ -8,6 +8,7 @@ class EntityInput extends AbstractInput
 {
     public function __construct()
     {
+        parent::__construct();
         $this->setOption("type", "text");
     }
 

@@ -2,6 +2,8 @@
 
 namespace DeltaCMS\Cache;
 
+use Exception;
+
 class FileCache extends AbstractCache
 {
     private $folder;
@@ -29,11 +31,16 @@ class FileCache extends AbstractCache
         }
         $file = $this->folder . DIRECTORY_SEPARATOR . $key;
         if (is_file($file)) {
-            $res = unserialize(file_get_contents($file));
-            if ($res["ttl"] > time() && $res['value'] !== null) {
-                return $res["value"];
+            $content = file_get_contents($file);
+            if ($content !== false) {
+                $res = unserialize($content);
+                if ($res["ttl"] > time() && $res['value'] !== null) {
+                    return $res["value"];
+                } else {
+                    $this->delete($key);
+                }
             } else {
-                $this->delete($key);
+                throw new Exception("Cache file couldn't be read", 1);
             }
         }
         return $default;
@@ -62,7 +69,11 @@ class FileCache extends AbstractCache
 
     public function clear()
     {
-        $keys = array_diff(scandir($this->folder), array("..", "."));
+        $files = scandir($this->folder);
+        if ($files === false) {
+            throw new Exception("couldn't clear cache, the folder seems unreadable", 1);
+        }
+        $keys = array_diff($files, array("..", "."));
         foreach ($keys as $key) {
             $this->delete($key);
         }

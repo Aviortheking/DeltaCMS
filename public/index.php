@@ -21,7 +21,7 @@ if (!$ap->isCacheEnabled()) {
     $cache->clear();
 }
 
-$caches = $cache->getMultiple(array(
+$caches = (array) $cache->getMultiple(array(
     'routes',
     'templates',
     'forms'
@@ -32,12 +32,20 @@ $cachesBool = $caches["routes"] === null || $caches['templates'] === null || $ca
 if (!$ap->isCacheEnabled() || $cachesBool) {
     $cache->clear();
     $modulesDIR = dirname(__DIR__) . "/src/Modules";
-    $modules = array_diff(scandir($modulesDIR), array('..', '.'));
+    $dirs = scandir($modulesDIR);
+    if ($dirs === false) {
+        throw new Exception("Modules folder seems is not readable, Exiting", 1);
+    }
+    $modules = array_diff($dirs, array('..', '.'));
     /** @var string $module */
     foreach ($modules as $module) {
         $moduleDIR = $modulesDIR . "/" . $module;
         if (is_dir($moduleDIR) && is_file($moduleDIR . "/" . strtolower($module) . ".json")) {
-            $json = json_decode(file_get_contents($moduleDIR . "/" . strtolower($module) . ".json"));
+            $fileContent = file_get_contents($moduleDIR . "/" . strtolower($module) . ".json");
+            if ($fileContent === false) {
+                throw new Exception($module . " couldn't be read, please check that the JSON file is readable", 1);
+            }
+            $json = json_decode($fileContent);
             if (isset($json->templateFolder)) {
                 $cache->set(
                     'templates',
@@ -69,7 +77,7 @@ if (!$ap->isCacheEnabled() || $cachesBool) {
             }
         }
     }
-    $caches = $cache->getMultiple(array(
+    $caches = (array) $cache->getMultiple(array(
         'routes',
         'templates',
         'forms'
@@ -94,12 +102,10 @@ foreach ($caches['routes'] as $key => $value) {
         $loader->loadClass($value->controller);
         $function = $value->function;
         // dump($function);
-        /** @var DeltaCMS\Classes\Controller $controller */
+        /** @var \DeltaCMS\Controller $controller */
         $controller = new $value->controller();
         // dd(new $routeArgs->controller());
-        if ($composants) {
-            $controller->setUrlArguments($composants);
-        }
+        $controller->setUrlArguments($composants);
         // if(isset($json->templateFolder)) $controller->loadTwig($json->templateFolder);
         echo $controller->$function();
         die;

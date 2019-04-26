@@ -2,6 +2,8 @@
 
 namespace DeltaCMS;
 
+use ReflectionClass;
+
 abstract class Enum
 {
     /** @var null|array $constCacheArray */

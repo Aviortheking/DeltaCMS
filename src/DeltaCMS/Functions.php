@@ -1,4 +1,5 @@
 <?php
+use PHPUnit\Runner\Exception;
 
 function startsWith($haystack, $needle)
 {
@@ -11,7 +12,7 @@ function startsWith($haystack, $needle)
  * @param string $slug
  * @param object $options options->regex &| options->setting
  *
- * @return bool|array
+ * @return bool|stdClass
  */
 function slugEqualToURI($slug, $uri, $options)
 {
@@ -49,14 +50,17 @@ function slugEqualToURI($slug, $uri, $options)
 
 function jsonc_decode($filename, $assoc = false, $depth = 512, $options = 0)
 {
-    return json_decode(
-        preg_replace(
-            '![ \t]*//.*[ \t]*[\r\n]!',
-            '',
-            file_get_contents($filename)
-        ),
-        $assoc,
-        $depth,
-        $options
+    $fileContent = file_get_contents($filename);
+    if ($fileContent === false) {
+        throw new Exception("File" . $filename . " is not readable or not existing", 1);
+    }
+    $fileContent = preg_replace(
+        '![ \t]*//.*[ \t]*[\r\n]!',
+        '',
+        $fileContent
     );
+    if ($fileContent === null) {
+        throw new Exception("An error occured", 1);
+    }
+    return json_decode($fileContent, $assoc, $depth, $options);
 }

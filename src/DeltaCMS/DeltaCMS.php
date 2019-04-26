@@ -27,8 +27,6 @@ class DeltaCMS
     /**
      * Get actual DeltaCMS instance
      *
-     * @param array $settings
-     * Settings to set to the software
      *
      * @return DeltaCMS
      */
@@ -53,12 +51,8 @@ class DeltaCMS
         return isset($this->logger) ? $this->logger : $this->logger = new Logger(dirname($this->root));
     }
 
-    /** @var \Twig\Loader\FileSystemLoader $loader */
+    /** @var \Twig\Loader\FilesystemLoader $loader */
     private $loader;
-    // private function setLoader(FilesystemLoader $loader)
-    // {
-    //     $this->loader = $loader;
-    // }
 
     public function addLoaderFolder(string $path, string $prefix = "DeltaCMS")
     {

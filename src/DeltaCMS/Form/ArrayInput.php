@@ -7,6 +7,7 @@ class ArrayInput extends AbstractInput
 
     public function __construct()
     {
+        parent::__construct();
         $this->options = array(
             'elements' => array()
         );

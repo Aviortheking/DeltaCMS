@@ -39,7 +39,7 @@ class Form
             $adder = "add" . ucfirst($name);
             $value = filter_input(INPUT_POST, $name);
             $field = $this->getField($settings->type);
-            $value = $field->processValue($value, $settings);
+            $value = $field->getValue();
             if (is_callable(array($entity, $setter))) {
                 $entity->$setter($value);
             } elseif (is_callable(array($entity, $adder))) {
@@ -86,7 +86,7 @@ class Form
             $form = $forms[$formname];
             $this->fields = $form->fields;
             // dd($this->fields);
-            if ($this->isSubmitting($this->fields)) {
+            if ($this->isSubmitting()) {
                 if ($entity !== null) {
                     $this->putFieldsInEntity(
                         $entity,

@@ -1,9 +1,12 @@
 <?php
 
+namespace Tests;
+
 use PHPUnit\Framework\TestCase;
 use DeltaCMS\Cache\FileCache;
 use DeltaCMS\Logger;
 use Psr\Log\InvalidArgumentException;
+use Exception;
 
 final class LoggerTest extends TestCase
 {

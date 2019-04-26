@@ -8,7 +8,7 @@ class Controller
     protected $urlArguments = array();
     protected $moduleRoot = null;
 
-    /** @var \DeltaCMS\Cache\FileCache */
+    /** @var \Psr\SimpleCache\CacheInterface */
 
     protected $cache;
 

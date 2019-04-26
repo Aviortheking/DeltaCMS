@@ -15,7 +15,7 @@ interface Input
     /**
      * get options that will be passed into the final object
      *
-     * @return void
+     * @return array
      */
     public function getAttributes(): array;
 
@@ -29,7 +29,7 @@ interface Input
     /**
      * get options that will be passed into the final object
      *
-     * @return void
+     * @return array
      */
     public function getOptions(): array;
 
