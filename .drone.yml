@@ -1,73 +1,215 @@
 ---
 kind: pipeline
-name: Build
+name: php7.1
+
+volumes:
+- name: vendor
+  temp: {}
 
 steps:
-- name: Build
-  image: php:latest
+- name: install
+  image: php:7.1
+  volumes:
+  - name: vendor
+    path: /drone/src/vendor
   commands:
-  - chmod +x prepare.sh && ./prepare.sh
+  - apt-get update -yqq
+  - apt-get install -yqq git zip
+  - cd vendor
+  - curl -sS https://getcomposer.org/installer | php
+  - cd ../
+  - php vendor/composer.phar install
+
+- name: Tests
+  image: php:7.1
+  commands:
+  - pecl install xdebug
+  - docker-php-ext-enable xdebug
+  - php vendor/composer.phar run phpunit
+  - php vendor/composer.phar run phpstan
+  environment:
+    CODACY_PROJECT_TOKEN:
+      from_secret: CODACY_PROJECT_TOKEN
+  volumes:
+  - name: vendor
+    path: ./vendor
+steps:
+- name: install
+  image: php:7.1
+  volumes:
+  - name: vendor
+    path: /drone/src/vendor
+  commands:
+  - apt-get update -yqq
+  - apt-get install -yqq git zip
+  - cd vendor
+  - curl -sS https://getcomposer.org/installer | php
+  - cd ../
+  - php vendor/composer.phar install
+
+- name: Tests
+  image: php:7.1
+  commands:
+  - pecl install xdebug
+  - docker-php-ext-enable xdebug
+  - php vendor/composer.phar run phpunit
+  - php vendor/composer.phar run phpstan
+  environment:
+    CODACY_PROJECT_TOKEN:
+      from_secret: CODACY_PROJECT_TOKEN
+  volumes:
+  - name: vendor
+    path: /drone/src/vendor
+
+- name: Code Quality
+  image: php:7.1
+  commands:
+  - php vendor/composer.phar run phpmd
+  - php vendor/composer.phar run phpcs
+  volumes:
+  - name: vendor
+    path: /drone/src/vendor
 
 ---
 kind: pipeline
-name: Test
+name: php7.2
 
-depends_on:
-  - Build
+volumes:
+- name: vendor
+  temp: {}
 
 steps:
-- name: PHP Unit
-  image: php:latest
+- name: install
+  image: php:7.2
+  volumes:
+  - name: vendor
+    path: /drone/src/vendor
   commands:
-  - chmod +x prepare.sh && ./prepare.sh
-  - php composer.phar run phpunit
+  - apt-get update -yqq
+  - apt-get install -yqq git zip
+  - cd vendor
+  - curl -sS https://getcomposer.org/installer | php
+  - cd ../
+  - php vendor/composer.phar install
+
+- name: Tests
+  image: php:7.2
+  commands:
+  - pecl install xdebug
+  - docker-php-ext-enable xdebug
+  - php vendor/composer.phar run phpunit
+  - php vendor/composer.phar run phpstan
+  environment:
+    CODACY_PROJECT_TOKEN:
+      from_secret: CODACY_PROJECT_TOKEN
+  volumes:
+  - name: vendor
+    path: /drone/src/vendor
+
+- name: Code Quality
+  image: php:7.2
+  commands:
+  - php vendor/composer.phar run phpmd
+  - php vendor/composer.phar run phpcs
+  volumes:
+  - name: vendor
+    path: /drone/src/vendor
+
+---
+kind: pipeline
+name: php7.3
+
+volumes:
+- name: vendor
+  temp: {}
+
+steps:
+- name: install
+  image: php:7.3
+  volumes:
+  - name: vendor
+    path: /drone/src/vendor
+  commands:
+  - apt-get update -yqq
+  - apt-get install -yqq git zip
+  - cd vendor
+  - curl -sS https://getcomposer.org/installer | php
+  - cd ../
+  - php vendor/composer.phar install
+
+- name: Tests
+  image: php:7.3
+  commands:
+  - apt-get update -yqq
+  - apt-get install -yqq git
+  - pecl install xdebug
+  - docker-php-ext-enable xdebug
+  - php vendor/composer.phar run phpunit
+  - php vendor/composer.phar run phpstan
   - vendor/bin/codacycoverage clover tmp/code-coverage.xml
   environment:
     CODACY_PROJECT_TOKEN:
       from_secret: CODACY_PROJECT_TOKEN
+  volumes:
+  - name: vendor
+    path: /drone/src/vendor
 
-- name: PHPStan
-  image: php:latest
+- name: Code Quality
+  image: php:7.3
   commands:
-  - chmod +x prepare.sh && ./prepare.sh
-  - php composer.phar run phpstan
-
----
-kind: pipeline
-name: Code Quality
-
-depends_on:
-  - Build
-
-steps:
-- name: PHP Code Sniffer
-  image: php:latest
-  commands:
-  - chmod +x prepare.sh && ./prepare.sh
-  - php composer.phar run phpcs
-- name: PHP Mess Detector
-  image: php:latest
-  commands:
-  - chmod +x prepare.sh && ./prepare.sh
-  - php composer.phar run phpmd
-
+  - php vendor/composer.phar run phpmd
+  - php vendor/composer.phar run phpcs
+  volumes:
+  - name: vendor
+    path: /drone/src/vendor
 
 ---
 kind: pipeline
 name: Package
 
 depends_on:
-  - Code Quality
-  - Test
+  - php7.1
+  - php7.2
+  - php7.3
+
+volumes:
+- name: vendor
+  temp: {}
+- name: tmp
+  temp: {}
 
 steps:
-- name: prod
-  image: php:latest
+- name: install
+  image: php:7.3
+  volumes:
+  - name: vendor
+    path: /drone/src/vendor
+  - name: tmp
+    path: /drone/src/tmp
   commands:
-  - chmod +x prepare.sh && ./prepare.sh
-  - php composer.phar install --no-dev --optimize-autoloader
+  - apt-get update -yqq
+  - apt-get install -yqq git zip
+  - cd tmp
+  - curl -sS https://getcomposer.org/installer | php
+  - cd ../
+  - php tmp/composer.phar install --no-dev --optimize-autoloader
+  when:
+    event: tag
+
+- name: compress
+  image: php:7.3
+  commands:
+  - apt-get update -yqq
+  - apt-get install -yqq zip tar
   - cat production.txt | zip DeltaCMS.zip -r -@
   - tar -cvzf DeltaCMS.tar.gz -T production.txt
+  when:
+    event: tag
+  volumes:
+  - name: vendor
+    path: /drone/src/vendor
+  - name: tmp
+    path: /drone/src/tmp
   when:
     event: tag
 
@@ -85,3 +227,8 @@ steps:
       - sha1
   when:
     event: tag
+  volumes:
+  - name: vendor
+    path: /drone/src/vendor
+  - name: tmp
+    path: /drone/src/tmp
