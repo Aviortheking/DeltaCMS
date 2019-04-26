@@ -1,26 +1,23 @@
-# Admin Panel
-
 [![Logo (<3)](https://git.delta-wings.net/DeltaCMS/Ressources/raw/branch/master/open-graph.png)](https://delta-wings.net)
 
 [![build](https://img.shields.io/drone/build/DeltaCMS/Core.svg?server=https%3A%2F%2Fci.delta-wings.net&style=for-the-badge)](https://ci.delta-wings.net/DeltaCMS/Core/)
-![coverage](https://img.shields.io/codacy/coverage/bf7f9ac73707426e9afc4b9daa950039.svg?style=for-the-badge)
-![Code Quality](https://img.shields.io/codacy/grade/bf7f9ac73707426e9afc4b9daa950039.svg?style=for-the-badge)
+[![coverage](https://img.shields.io/codacy/coverage/bf7f9ac73707426e9afc4b9daa950039.svg?style=for-the-badge)](https://app.codacy.com/project/Aviorleking/DeltaCMS/dashboard)
+[![Code Quality](https://img.shields.io/codacy/grade/bf7f9ac73707426e9afc4b9daa950039.svg?style=for-the-badge)](https://app.codacy.com/project/Aviorleking/DeltaCMS/dashboard)
 
 ## Table of Content
 
-- [Admin Panel](#admin-panel)
-  - [Table of Content](#table-of-content)
-  - [Description](#description)
-    - [What is Delta CMS ?](#what-is-delta-cms)
-  - [Install](#install)
-  - [Build from source](#build-from-source)
-  - [Changelog](#changelog)
-  - [Badges](#badges)
-    - [Build status](#build-status)
-    - [Coverage](#coverage)
-    - [Code Quality](#code-quality)
-  - [Dependencies](#dependencies)
-  - [Development Dependencies](#development-dependencies)
+- [Table of Content](#table-of-content)
+- [Description](#description)
+  - [What is Delta CMS ?](#what-is-delta-cms)
+- [Install](#install)
+- [Build from source](#build-from-source)
+- [Changelog](#changelog)
+- [Badges](#badges)
+  - [Build status](#build-status)
+  - [Coverage](#coverage)
+  - [Code Quality](#code-quality)
+- [Dependencies](#dependencies)
+- [Development Dependencies](#development-dependencies)
 
 ## Description
 
