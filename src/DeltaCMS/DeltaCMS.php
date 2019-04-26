@@ -94,8 +94,9 @@ class DeltaCMS
         return $this->settings->cache->enabled == "true";
     }
 
+    /** @var \Doctrine\ORM\EntityManager $em */
     private $em;
-    public function getEm()
+    public function getEm(): EntityManager
     {
         if (!isset($this->em)) {
             $config = Setup::createAnnotationMetadataConfiguration(array(
