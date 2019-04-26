@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Cache;
 
 use PHPUnit\Framework\TestCase;
 use DeltaCMS\Cache\SessionCache;
