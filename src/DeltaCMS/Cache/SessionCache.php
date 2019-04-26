@@ -58,7 +58,8 @@ class SessionCache extends AbstractCache
 
     public function clear()
     {
-        if (phpversion() !== false && version_compare(phpversion(), '7.2.0', '<')) {
+        dump(phpversion());
+        if (phpversion() !== false && version_compare(phpversion(), '7.2.0', '>=')) {
             return session_reset();
         }
         session_reset();
