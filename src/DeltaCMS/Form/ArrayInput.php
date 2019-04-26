@@ -52,12 +52,13 @@ class ArrayInput extends AbstractInput
 
     public function getValue($name = null)
     {
-        if (!isset($_POST[$this->attributes["name"]]) || empty($_POST[$this->attributes["name"]])) {
+        $post = filter_input_array(INPUT_POST)[$this->attributes["name"]];
+        if (!isset($post) || empty($post)) {
             return array();
         }
         $clas = $this->options["array_type"];
         $arr = array();
-        foreach ($_POST[$this->attributes["name"]] as $name => $value) {
+        foreach (array_keys($post) as $name) {
             $input = new $clas();
             $input->setOption("name", $this->attributes["name"]);
             $arr[] = $input->getValue($name);
