@@ -99,11 +99,6 @@ DeltaCMS is powered by all these awesome projects
   - [Composer](https://getcomposer.org/)
 - Debugging (like a pro :yum:)
   - [Symfony VarDumper](https://symfony.com/doc/current/components/var_dumper.html)
-- Hosting
-  - [Gitlab](https://gitlab.com/) mirror _Project url [here](https://gitlab.com/delta-wings/adminpanel)_
-  - [Gitea](https://gitea.io/) _Current server [here](https://git.delta-wings.net/DeltaCMS/Core)_
-  - [Drone](https://drone.io/) _Current server [here](https://ci.delta-wings.net/)_
-  - [Codacy](https://codacy.com/) _Project Dashboard [here](https://app.codacy.com/project/Aviorleking/DeltaCMS/dashboard)_
 - Code Hosting
   - [Gitea](https://gitea.io/) (Self-hosted) instance [here](https://git.delta-wings.net/DeltaCMS/Core)
   - Mirrors
@@ -114,6 +109,8 @@ DeltaCMS is powered by all these awesome projects
 - Code Check (Testing, Code Analytics)
   - [PHP Codesniffer](https://github.com/squizlabs/PHP_CodeSniffer)
   - [PHPUnit](https://phpunit.de/)
+  - [PHPStan](https://github.com/phpstan/phpstan)
   - [PHP Mess Detector](https://phpmd.org/)
+  - [Codacy](https://codacy.com/) _Project Dashboard [here](https://app.codacy.com/project/Aviorleking/DeltaCMS/dashboard)_
 - Other
   - [Issue & Merge request templates](https://www.talater.com/open-source-templates/#/)
