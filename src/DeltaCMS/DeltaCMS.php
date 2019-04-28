@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @author Avior <florian.bouillon@delta-wings.net>
- * @since 1.0.0
- */
-
 namespace DeltaCMS;
 
 use Twig\Loader\FilesystemLoader;
