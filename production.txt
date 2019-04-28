@@ -1,9 +1,8 @@
 logs/
 src/
 vendor/
-.htaccess
+public/
 CHANGELOG.md
 LICENSE
 README.md
-index.html
 config.jsonc
