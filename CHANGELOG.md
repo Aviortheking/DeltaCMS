@@ -12,3 +12,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 ### Fixed
 ### Security
+
+## [0.1.0] - 2019-04-28
+
+### Added
+
+- Controller system
+- From System _WIP_
+- Cache System (both global cache and session cache)
+- Logger
+- Template System (Powered by Twig)
+- System Config File
+- Global getters (src/DeltaCMS/DeltaCMS)
+- Module Support
+
+[0.1.0]: #!
