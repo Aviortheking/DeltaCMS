@@ -12,10 +12,10 @@
     "autoload": {
         "psr-4": {
             "DeltaCMS\\": "src/DeltaCMS",
-            "": "src/Modules"
+            "": "modules"
         },
         "exclude-from-classmap": [
-            "src/Modules"
+            "modules"
         ],
         "files": [
             "src/DeltaCMS/Functions.php"
@@ -44,10 +44,10 @@
 	"scripts": {
 		"phpunit": "phpunit --coverage-text --colors=never",
 		"codacy": "codacycoverage clover tmp/code-coverage.xml",
-		"phpstan": "phpstan analyse src/DeltaCMS public tests --level=max",
+		"phpstan": "phpstan analyse src modules/ModuleName public tests --level=max",
 
 		"phpcs": "phpcs",
-		"phpmd": "vendor/bin/phpmd . text phpmd --exclude vendor/,cache/",
+		"phpmd": "vendor/bin/phpmd src,modules/ModuleName,public text phpmd",
 
 		"test": "composer run phpunit && composer run phpstan",
 		"quality": "composer run phpmd && composer run phpcs",

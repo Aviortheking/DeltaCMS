@@ -31,7 +31,7 @@ $caches = (array) $cache->getMultiple(array(
 $cachesBool = $caches["routes"] === null || $caches['templates'] === null || $caches['forms'] === null;
 if (!$ap->isCacheEnabled() || $cachesBool) {
     $cache->clear();
-    $modulesDIR = dirname(__DIR__) . "/src/Modules";
+    $modulesDIR = dirname(__DIR__) . "/modules";
     $dirs = scandir($modulesDIR);
     if ($dirs === false) {
         throw new Exception("Modules folder seems is not readable, Exiting", 1);

@@ -95,7 +95,7 @@ class DeltaCMS
     {
         if (!isset($this->em)) {
             $config = Setup::createAnnotationMetadataConfiguration(array(
-                $this->root . "/Modules/Aptatio/DB"
+                dirname($this->root) . "/modules/Aptatio/DB"
             ), true);
 
             $db = $this->settings->database;

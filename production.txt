@@ -2,6 +2,7 @@ logs/
 src/
 vendor/
 public/
+modules/
 CHANGELOG.md
 LICENSE
 README.md

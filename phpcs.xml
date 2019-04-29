@@ -2,4 +2,7 @@
 	<description>The PSR-12 coding standard.</description>
 	<rule ref="PSR12"/>
 	<file>src</file>
+	<file>public</file>
+	<file>modules</file>
+	<file>tests</file>
 </ruleset>

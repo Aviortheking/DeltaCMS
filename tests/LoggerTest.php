@@ -41,7 +41,15 @@ final class LoggerTest extends TestCase
         ));
         $this->assertStringEqualsFile(
             $this->file,
-            "[Alert]: " . (new \DateTime())->format("Y-m-d H:i:s") . " test\n[Alert]: " . (new \DateTime())->format("Y-m-d H:i:s") . " 0 " . $exception->getFile() . "[Exception] 0 " . $exception->getMessage() . "\n"
+            "[Alert]: " .
+            (new \DateTime())->format("Y-m-d H:i:s") .
+            " test\n[Alert]: " .
+            (new \DateTime())->format("Y-m-d H:i:s") .
+            " 0 " .
+            $exception->getFile() .
+            "[Exception] 0 " .
+            $exception->getMessage() .
+            "\n"
         );
     }
 

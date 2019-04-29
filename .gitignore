@@ -18,10 +18,10 @@ cache/
 !/logs/.gitkeep
 
 # excludes modules
-/src/Modules/*
+modules/*
 
 # but allow example module
-!/src/Modules/ModuleName/
+!modules/ModuleName/
 
 
 # OS Related Exclusions (used: https://gitignore.io/)

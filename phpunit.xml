@@ -6,7 +6,7 @@
 	bootstrap="vendor/autoload.php"
 	cacheResult="false"
 	cacheTokens="false"
-	colors="true"
+	colors="false"
 	convertErrorsToExceptions="true"
 	convertNoticesToExceptions="true"
 	convertWarningsToExceptions="true"
@@ -25,7 +25,8 @@
 	verbose="false">
 	<filter>
 		<whitelist>
-			<directory>src/DeltaCMS</directory>
+			<directory>src</directory>
+			<directory>public</directory>
 		</whitelist>
 	</filter>
 	<testsuites>
