@@ -28,9 +28,8 @@ class SessionCache extends AbstractCache
             $item = $_SESSION[$key];
             if ($item["ttl"] > time() && $item["value"] !== null) {
                 return $item["value"];
-            } else {
-                $this->delete($key);
             }
+            $this->delete($key);
         }
         return $default;
     }
@@ -58,7 +57,6 @@ class SessionCache extends AbstractCache
 
     public function clear()
     {
-        dump(phpversion());
         if (phpversion() !== false && version_compare(phpversion(), '7.2.0', '>=')) {
             return session_reset();
         }

@@ -32,16 +32,14 @@ class FileCache extends AbstractCache
         $file = $this->folder . DIRECTORY_SEPARATOR . $key;
         if (is_file($file)) {
             $content = file_get_contents($file);
-            if ($content !== false) {
-                $res = unserialize($content);
-                if ($res["ttl"] > time() && $res['value'] !== null) {
-                    return $res["value"];
-                } else {
-                    $this->delete($key);
-                }
-            } else {
+            if ($content === false) {
                 throw new Exception("Cache file couldn't be read", 1);
             }
+            $res = unserialize($content);
+            if ($res["ttl"] > time() && $res['value'] !== null) {
+                return $res["value"];
+            }
+            $this->delete($key);
         }
         return $default;
     }
@@ -51,7 +49,7 @@ class FileCache extends AbstractCache
         if (!$this->checkKey($key)) {
             throw new InvalidArgumentException("key is not valid");
         }
-        $tl = $ttl != null ? $this->getTTL($ttl) : $this->ttl;
+        $tl = isset($ttl) ? $this->getTTL($ttl) : $this->ttl;
         $arr = array(
             "value" => $value,
             'ttl' => time() + $tl

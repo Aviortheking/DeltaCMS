@@ -17,7 +17,7 @@ class DatalistInput extends AbstractInput
     public function setOption(string $name, $value)
     {
         if ($name === "name") {
-            $this->attributes["list"] = $name . "_list";
+            $this->attributes["list"] = $value . "_list";
         }
         parent::setOption($name, $value);
     }

@@ -73,13 +73,12 @@ abstract class AbstractCache implements CacheInterface
     {
         if (is_int($ttl)) {
             return $ttl;
-        } else {
-            return
-                ((($ttl->y * 365 + $ttl->m * 30 + $ttl->d //translate to days
-                ) * 24 + $ttl->h //translate to hours
-                ) * 60 + $ttl->i //translate to minutes
-                ) * 60 + $ttl->s //translate to seconds
-            ;
         }
+        return
+            ((($ttl->y * 365 + $ttl->m * 30 + $ttl->d //translate to days
+            ) * 24 + $ttl->h //translate to hours
+            ) * 60 + $ttl->i //translate to minutes
+            ) * 60 + $ttl->s //translate to seconds
+        ;
     }
 }

@@ -21,7 +21,7 @@ class ArrayInput extends AbstractInput
             array(
                 "array_type",
                 "item",
-                "script"
+                "click"
             )
         );
     }

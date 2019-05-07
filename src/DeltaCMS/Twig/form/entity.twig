@@ -3,13 +3,15 @@
 {% block after %}
 	<datalist id="{{ attributes.list }}">
 		{% for entity in options.entities %}
+		<option data-id="{{ entity.id }}">
 			{% if entity.name is not null %}
-				<option>{{entity.name}}</option>
+				{{entity.name}}
 			{% elseif entity.firstname is not null %}
-				<option>{{entity.firstname}}</option>
+				{{entity.firstname}} {{ entity.lastname }}
 			{% else %}
-				<option>{{entity.id}}</option>
+				{{entity.id}}
 			{% endif %}
+			</option>
 		{% endfor %}
 	</datalist>
 {% endblock %}

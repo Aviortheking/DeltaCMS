@@ -59,7 +59,7 @@ class Form
     private function addField($name, $settings)
     {
         /** @var \DeltaCMS\Form\Input */
-        $field = $this->getField($settings->type);
+        $field = $this->getField($settings["type"]);
 
         $entity = $this->session->get("form_" . $this->formname, null);
         $func = "get" . ucfirst($name);
@@ -69,8 +69,6 @@ class Form
         foreach ($settings as $settingName => $value) {
             $field->setOption($settingName, $value);
         }
-        // dump($_POST[$name]);
-        dump($name, $field->getValue());
         $this->$name = $field->render();
     }
 
@@ -84,7 +82,7 @@ class Form
         if (isset($forms[$formname])) {
             $this->formname = $formname;
             $form = $forms[$formname];
-            $this->fields = $form->fields;
+            $this->fields = $form["fields"];
             // dd($this->fields);
             if ($this->isSubmitting()) {
                 if ($entity !== null) {

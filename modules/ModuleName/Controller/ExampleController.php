@@ -22,8 +22,7 @@ class ExampleController extends Controller
     {
         if (Authentificator::getInstance()->isLoggedIn()) {
             return "test is false!";
-        } else {
-            return "test is true";
         }
+        return "test is true";
     }
 }

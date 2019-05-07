@@ -34,7 +34,8 @@ abstract class AbstractInput implements Input
             'id',
             'value',
             'placeholder',
-            'style'
+            'style',
+            'disabled'
         );
     }
 

@@ -8,11 +8,11 @@ class DateInput extends AbstractInput
 {
     public function setOption(string $name, $value)
     {
-        if ($name === "value") {
+        if ($name === "value" && $value !== null) {
             $this->attributes["value"] = (new DateTime($value))->format('Y-m-d');
-        } else {
-            parent::setOption($name, $value);
+            return;
         }
+        parent::setOption($name, $value);
     }
 
     public function getValue($name = null)
