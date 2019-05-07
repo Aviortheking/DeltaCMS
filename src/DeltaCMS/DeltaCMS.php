@@ -8,6 +8,7 @@ use DeltaCMS\Cache\FileCache;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use DeltaCMS\Logger;
+use DeltaCMS\Route\Router;
 
 class DeltaCMS
 {
@@ -31,6 +32,8 @@ class DeltaCMS
             define("ROOT", dirname(dirname(__DIR__)));
             $ap = self::$instance = new self();
             $ap->root = dirname(dirname(__DIR__));
+            $ap->settings = jsonc_decode($ap->root . "/config.jsonc", false);
+            $ap->settings->cache->path = $ap->root . DIRECTORY_SEPARATOR . $ap->settings->cache->path . "/fs/";
             $ap->loader = new FilesystemLoader();
             $ap->addLoaderFolder($ap->root . "/src/DeltaCMS/Twig");
             // $ap->setLoader(new FilesystemLoader());
@@ -42,6 +45,13 @@ class DeltaCMS
     {
         return $this->root;
     }
+
+    private $router;
+    public function getRouter()
+    {
+        return isset($this->router) ? $this->router : $this->router = new Router();
+    }
+
     /** @var Logger $logger */
     private $logger;
     public function getLogger(): Logger
@@ -62,7 +72,8 @@ class DeltaCMS
     public function getTwig()
     {
         return isset($this->twig) ? $this->twig : $this->twig = new Environment($this->loader, [
-            'cache' => $this->isCacheEnabled() ? $this->settings->cache->path . '/twig/' : false
+            'cache' => $this->isCacheEnabled() ? $this->settings->cache->path . '/twig/' : false,
+            'debug' => true
         ]);
     }
 
