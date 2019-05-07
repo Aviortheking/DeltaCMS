@@ -7,4 +7,6 @@ interface ConfigInterface
     public function getRoutes(): array;
 
     public function getTemplateFolder(): string;
+
+    public function getForms(): array;
 }
