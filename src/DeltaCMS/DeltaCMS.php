@@ -30,21 +30,23 @@ class DeltaCMS
         if (!isset(self::$instance)) {
             define("ROOT", dirname(dirname(__DIR__)));
             $ap = self::$instance = new self();
-            $ap->root = dirname(__DIR__);
-            $ap->settings = jsonc_decode(dirname($ap->root) . "/config.jsonc", false);
-            $ap->settings->cache->path = dirname($ap->root) . DIRECTORY_SEPARATOR . $ap->settings->cache->path;
+            $ap->root = dirname(dirname(__DIR__));
             $ap->loader = new FilesystemLoader();
-            $ap->addLoaderFolder($ap->root . "/DeltaCMS/Twig");
+            $ap->addLoaderFolder($ap->root . "/src/DeltaCMS/Twig");
             // $ap->setLoader(new FilesystemLoader());
         }
         return self::$instance;
     }
 
+    public function getRoot(): string
+    {
+        return $this->root;
+    }
     /** @var Logger $logger */
     private $logger;
     public function getLogger(): Logger
     {
-        return isset($this->logger) ? $this->logger : $this->logger = new Logger(dirname($this->root));
+        return isset($this->logger) ? $this->logger : $this->logger = new Logger($this->root . "/logs/logs.log");
     }
 
     /** @var \Twig\Loader\FilesystemLoader $loader */
@@ -76,7 +78,7 @@ class DeltaCMS
         if (!$this->cache) {
             $driver = $this->settings->cache->driver;
             $options = $this->settings->cache->options;
-            $options->path = dirname($this->root) . $this->settings->cache->path;
+            $options->path = $this->root . $this->settings->cache->path;
             $this->cache = new $driver($this->settings->cache->options);
         }
         // dd($this->cache);
@@ -95,7 +97,7 @@ class DeltaCMS
     {
         if (!isset($this->em)) {
             $config = Setup::createAnnotationMetadataConfiguration(array(
-                dirname($this->root) . "/modules/Aptatio/DB"
+                $this->root . "/modules/Aptatio/DB"
             ), true);
 
             $db = $this->settings->database;
