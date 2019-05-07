@@ -43,4 +43,6 @@ interface ModuleInterface
      * @return void
      */
     public function delete();
+
+    public function getName(): string;
 }
