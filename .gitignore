@@ -23,6 +23,8 @@ modules/*
 # but allow example module
 !modules/ModuleName/
 
+#VSCode addons
+.gitea/
 
 # OS Related Exclusions (used: https://gitignore.io/)
 
