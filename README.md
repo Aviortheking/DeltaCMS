@@ -23,7 +23,7 @@
 
 ### What is Delta CMS ?
 
-This is a Content Management System made to be simple for end users AND developpers with everything made into modules.
+This is a Content Management System made to be simple for end users AND developpers with everything made into modules.  
 (more later)
 
 ## Install
