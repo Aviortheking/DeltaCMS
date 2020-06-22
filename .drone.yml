@@ -8,7 +8,7 @@ volumes:
 
 steps:
 - name: install
-  image: php:7.1
+  image: php:7.4
   volumes:
   - name: vendor
     path: /drone/src/vendor
@@ -21,7 +21,7 @@ steps:
   - php vendor/composer.phar install
 
 - name: Tests
-  image: php:7.1
+  image: php:7.4
   commands:
   - pecl install xdebug
   - docker-php-ext-enable xdebug
@@ -35,7 +35,7 @@ steps:
     path: ./vendor
 steps:
 - name: install
-  image: php:7.1
+  image: php:7.4
   volumes:
   - name: vendor
     path: /drone/src/vendor
@@ -48,7 +48,7 @@ steps:
   - php vendor/composer.phar install
 
 - name: Tests
-  image: php:7.1
+  image: php:7.4
   commands:
   - pecl install xdebug
   - docker-php-ext-enable xdebug
@@ -62,7 +62,7 @@ steps:
     path: /drone/src/vendor
 
 - name: Code Quality
-  image: php:7.1
+  image: php:7.4
   commands:
   - php vendor/composer.phar run phpmd
   - php vendor/composer.phar run phpcs
@@ -80,7 +80,7 @@ volumes:
 
 steps:
 - name: install
-  image: php:7.2
+  image: php:7.4
   volumes:
   - name: vendor
     path: /drone/src/vendor
@@ -93,7 +93,7 @@ steps:
   - php vendor/composer.phar install
 
 - name: Tests
-  image: php:7.2
+  image: php:7.4
   commands:
   - pecl install xdebug
   - docker-php-ext-enable xdebug
@@ -107,7 +107,7 @@ steps:
     path: /drone/src/vendor
 
 - name: Code Quality
-  image: php:7.2
+  image: php:7.4
   commands:
   - php vendor/composer.phar run phpmd
   - php vendor/composer.phar run phpcs
@@ -125,7 +125,7 @@ volumes:
 
 steps:
 - name: install
-  image: php:7.3
+  image: php:7.4
   volumes:
   - name: vendor
     path: /drone/src/vendor
@@ -138,7 +138,7 @@ steps:
   - php vendor/composer.phar install
 
 - name: Tests
-  image: php:7.3
+  image: php:7.4
   commands:
   - apt-get update -yqq
   - apt-get install -yqq git
@@ -155,7 +155,7 @@ steps:
     path: /drone/src/vendor
 
 - name: Code Quality
-  image: php:7.3
+  image: php:7.4
   commands:
   - php vendor/composer.phar run phpmd
   - php vendor/composer.phar run phpcs
@@ -180,7 +180,7 @@ volumes:
 
 steps:
 - name: install
-  image: php:7.3
+  image: php:7.4
   volumes:
   - name: vendor
     path: /drone/src/vendor
@@ -197,7 +197,7 @@ steps:
     event: tag
 
 - name: compress
-  image: php:7.3
+  image: php:7.4
   commands:
   - apt-get update -yqq
   - apt-get install -yqq zip tar
