@@ -36,7 +36,7 @@
     "require-dev": {
         "squizlabs/php_codesniffer": "3.5.5",
         "symfony/var-dumper": "4.4.10",
-        "phpunit/phpunit": "7.5.20",
+        "phpunit/phpunit": "9.2.5",
         "codacy/coverage": "1.4.3",
         "phpmd/phpmd": "2.8.2",
         "phpstan/phpstan": "0.11.19"
